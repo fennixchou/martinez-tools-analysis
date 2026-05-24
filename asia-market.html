@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martinez Tools 亞洲市場分析評估報告</title>
+    <style>
+        :root {
+            --primary: #0d1b2a;
+            --accent: #e63946;
+            --gold: #e0a526;
+            --teal: #2ec4b6;
+            --bg: #0a0f1a;
+            --card: #1b2838;
+            --text: #eaeaea;
+            --muted: #8899aa;
+            --border: #263248;
+            --green: #4ade80;
+            --red: #f87171;
+            --yellow: #fbbf24;
+            --blue: #60a5fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.75;
+        }
+        .hero {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b2838 40%, #162a3a 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+            position: relative;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 40%;
+            height: 3px;
+            background: var(--accent);
+        }
+        .hero h1 {
+            font-size: 2.3em;
+            color: var(--gold);
+            margin-bottom: 8px;
+            letter-spacing: 3px;
+        }
+        .hero .subtitle { font-size: 1.15em; color: var(--text); }
+        .hero .date { margin-top: 12px; color: var(--muted); font-size: 0.9em; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 20px; }
+
+        .exec-summary {
+            background: linear-gradient(135deg, #1a2940, #1b2838);
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 35px;
+        }
+        .exec-summary h2 { color: var(--gold); font-size: 1.4em; margin-bottom: 15px; }
+        .exec-summary .key-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .key-point {
+            background: rgba(255,255,255,0.03);
+            border-left: 3px solid var(--teal);
+            padding: 12px 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        .key-point .kp-title { color: var(--teal); font-weight: bold; font-size: 0.9em; margin-bottom: 4px; }
+
+        .toc {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 25px 30px;
+            margin-bottom: 35px;
+            border: 1px solid var(--border);
+        }
+        .toc h2 { color: var(--gold); margin-bottom: 12px; font-size: 1.2em; }
+        .toc ol { padding-left: 20px; columns: 2; }
+        .toc li { padding: 3px 0; }
+        .toc a { color: var(--accent); text-decoration: none; font-size: 0.93em; }
+        .toc a:hover { text-decoration: underline; }
+
+        section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 28px;
+            border: 1px solid var(--border);
+        }
+        section h2 {
+            color: var(--gold);
+            font-size: 1.4em;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        section h3 { color: var(--accent); font-size: 1.1em; margin: 18px 0 10px; }
+        section h4 { color: var(--teal); font-size: 1em; margin: 14px 0 8px; }
+        p { margin-bottom: 10px; font-size: 0.95em; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 0.9em;
+        }
+        th {
+            background: var(--primary);
+            color: var(--gold);
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--border);
+            font-size: 0.9em;
+        }
+        td {
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 0.78em;
+            font-weight: bold;
+        }
+        .b-green { background: rgba(74,222,128,0.12); color: var(--green); }
+        .b-red { background: rgba(248,113,113,0.12); color: var(--red); }
+        .b-yellow { background: rgba(251,191,36,0.12); color: var(--yellow); }
+        .b-blue { background: rgba(96,165,250,0.12); color: var(--blue); }
+        .b-teal { background: rgba(46,196,182,0.12); color: var(--teal); }
+
+        .alert {
+            padding: 14px 18px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.93em;
+        }
+        .alert-gold { background: rgba(224,165,38,0.08); border-left: 4px solid var(--gold); }
+        .alert-red { background: rgba(230,57,70,0.08); border-left: 4px solid var(--accent); }
+        .alert-teal { background: rgba(46,196,182,0.08); border-left: 4px solid var(--teal); }
+        .alert-blue { background: rgba(96,165,250,0.08); border-left: 4px solid var(--blue); }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .metric-card {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .metric-card .label { font-size: 0.82em; color: var(--muted); margin-bottom: 4px; }
+        .metric-card .value { font-size: 1.5em; font-weight: bold; color: var(--gold); }
+        .metric-card .sub { font-size: 0.78em; color: var(--teal); margin-top: 3px; }
+
+        .country-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 18px;
+            margin: 15px 0;
+        }
+        .country-card {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 22px;
+            border: 1px solid var(--border);
+        }
+        .country-card .flag { font-size: 1.8em; margin-bottom: 5px; }
+        .country-card h4 { color: var(--gold); margin-bottom: 8px; }
+
+        .score-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 4px;
+            margin: 6px 0;
+            overflow: hidden;
+        }
+        .score-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .sf-high { background: var(--green); }
+        .sf-mid { background: var(--yellow); }
+        .sf-low { background: var(--red); }
+
+        .strategy-step {
+            display: flex;
+            gap: 15px;
+            margin: 12px 0;
+            align-items: flex-start;
+        }
+        .step-num {
+            min-width: 36px;
+            height: 36px;
+            background: var(--accent);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        .step-content { flex: 1; }
+        .step-content strong { color: var(--gold); }
+
+        .radar-table td:first-child { font-weight: bold; color: var(--teal); }
+
+        ul.check { list-style: none; padding: 0; }
+        ul.check li { padding: 3px 0; font-size: 0.93em; }
+        ul.check li::before { content: '> '; color: var(--teal); font-weight: bold; }
+
+        .sources {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 22px;
+            margin-top: 18px;
+        }
+        .sources h3 { color: var(--gold); margin-bottom: 8px; }
+        .sources a { color: var(--accent); text-decoration: none; font-size: 0.85em; }
+        .sources a:hover { text-decoration: underline; }
+        .sources li { padding: 2px 0; }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: var(--muted);
+            font-size: 0.83em;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.5em; }
+            .toc ol { columns: 1; }
+            .country-grid { grid-template-columns: 1fr; }
+            section { padding: 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>MARTINEZ TOOLS</h1>
+    <div class="subtitle">亞洲市場分析評估報告</div>
+    <div class="date">報告日期：2026-05-25 ｜ 如菓室內裝修有限公司</div>
+</div>
+
+<div class="container">
+
+    <!-- Executive Summary -->
+    <div class="exec-summary">
+        <h2>Executive Summary</h2>
+        <p>Martinez Tool Company 作為全球鈦合金手工具的開創者，目前在亞洲市場的佈局仍處於極早期階段——僅在澳紐有少數授權經銷商，日本、韓國、台灣、東南亞均為空白市場。然而，亞太手工具市場規模達 <strong>USD $91.5 億</strong>（佔全球 34.3%），木構造建築在日本（90%+ 獨棟住宅）和澳洲持續成長，加上職業安全意識提升與高端工具需求增加，Martinez 在亞洲存在明確的市場機會。</p>
+
+        <div class="key-points">
+            <div class="key-point">
+                <div class="kp-title">市場規模</div>
+                亞太手工具市場 2025 年 $91.5 億 USD，CAGR 5.9%，為全球最大且成長最快的區域
+            </div>
+            <div class="key-point">
+                <div class="kp-title">優先市場</div>
+                澳洲（已有經銷商基礎）> 日本（木構造大國）> 台灣（手工具王國 + 高端需求）> 韓國
+            </div>
+            <div class="key-point">
+                <div class="kp-title">核心障礙</div>
+                日本鍛造錘文化根深蒂固、亞洲價格敏感度高、缺乏在地經銷網絡、品牌認知度近乎零
+            </div>
+            <div class="key-point">
+                <div class="kp-title">關鍵建議</div>
+                以澳洲為亞太跳板，善用 Hultafors 全球通路資源，以「職人健康」訴求切入高端市場
+            </div>
+        </div>
+    </div>
+
+    <!-- TOC -->
+    <div class="toc">
+        <h2>目錄</h2>
+        <ol>
+            <li><a href="#market-overview">亞太手工具市場總覽</a></li>
+            <li><a href="#target-markets">目標市場逐國分析</a></li>
+            <li><a href="#competitor">亞洲競品生態分析</a></li>
+            <li><a href="#current-footprint">Martinez 現有亞太佈局</a></li>
+            <li><a href="#consumer">亞洲消費者特性分析</a></li>
+            <li><a href="#pricing">定價策略與價格敏感度</a></li>
+            <li><a href="#channel">通路策略建議</a></li>
+            <li><a href="#localization">在地化與產品調整</a></li>
+            <li><a href="#marketing">行銷策略建議</a></li>
+            <li><a href="#risk">風險評估與因應</a></li>
+            <li><a href="#roadmap">市場進入路線圖</a></li>
+            <li><a href="#conclusion">結論與建議</a></li>
+        </ol>
+    </div>
+
+    <!-- 1. 市場總覽 -->
+    <section id="market-overview">
+        <h2>1. 亞太手工具市場總覽</h2>
+
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="label">亞太市場規模（2025）</div>
+                <div class="value">$91.5 億</div>
+                <div class="sub">USD，佔全球 34.3%</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">全球市場規模（2025）</div>
+                <div class="value">$266.9 億</div>
+                <div class="sub">USD，預計 2032 年達 $398.7 億</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">亞太 CAGR</div>
+                <div class="value">5.9%</div>
+                <div class="sub">2025-2032，全球最快成長區域</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">木構造建築 CAGR</div>
+                <div class="value">8.4%</div>
+                <div class="sub">亞太木構造市場 2024-2033</div>
+            </div>
+        </div>
+
+        <h3>市場成長驅動因素</h3>
+        <table>
+            <tr><th>驅動因素</th><th>說明</th><th>對 Martinez 的影響</th></tr>
+            <tr>
+                <td>快速城市化</td>
+                <td>亞太地區城市化率持續攀升，住宅與商業建設需求龐大</td>
+                <td><span class="badge b-green">正面</span> 建設量增加帶動手工具需求</td>
+            </tr>
+            <tr>
+                <td>基礎建設投資</td>
+                <td>各國政府大規模投入交通、住宅等基建項目</td>
+                <td><span class="badge b-green">正面</span> 專業木工與營造需求增加</td>
+            </tr>
+            <tr>
+                <td>職安意識提升</td>
+                <td>亞洲各國職業安全法規趨嚴，減少職業傷害成為趨勢</td>
+                <td><span class="badge b-green">高度正面</span> Martinez 「健康投資」訴求吻合</td>
+            </tr>
+            <tr>
+                <td>木構造建築政策</td>
+                <td>日、澳、中等國推動綠建築與木構造政策</td>
+                <td><span class="badge b-green">正面</span> 木構造需要骨架錘具</td>
+            </tr>
+            <tr>
+                <td>可支配所得成長</td>
+                <td>中產階級擴大，高端工具消費力提升</td>
+                <td><span class="badge b-yellow">中性偏正</span> 但價格敏感度仍高</td>
+            </tr>
+            <tr>
+                <td>電動工具普及</td>
+                <td>氣動釘槍、電動釘槍在亞洲建築中快速普及</td>
+                <td><span class="badge b-red">負面</span> 降低手工錘使用頻率</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 2. 目標市場逐國分析 -->
+    <section id="target-markets">
+        <h2>2. 目標市場逐國分析</h2>
+
+        <h3>市場優先排序評分</h3>
+        <table>
+            <tr>
+                <th>市場</th>
+                <th>木構造普及度</th>
+                <th>高端工具接受度</th>
+                <th>現有通路</th>
+                <th>市場規模</th>
+                <th>進入難度</th>
+                <th>總評分</th>
+                <th>優先級</th>
+            </tr>
+            <tr>
+                <td>澳洲</td>
+                <td>8/10</td>
+                <td>9/10</td>
+                <td>7/10</td>
+                <td>7/10</td>
+                <td>3/10（低）</td>
+                <td><strong>34/50</strong></td>
+                <td><span class="badge b-green">P1 最優先</span></td>
+            </tr>
+            <tr>
+                <td>紐西蘭</td>
+                <td>8/10</td>
+                <td>8/10</td>
+                <td>7/10</td>
+                <td>3/10</td>
+                <td>3/10（低）</td>
+                <td><strong>29/50</strong></td>
+                <td><span class="badge b-green">P1</span></td>
+            </tr>
+            <tr>
+                <td>日本</td>
+                <td>10/10</td>
+                <td>8/10</td>
+                <td>0/10</td>
+                <td>9/10</td>
+                <td>9/10（高）</td>
+                <td><strong>27/50</strong></td>
+                <td><span class="badge b-yellow">P2</span></td>
+            </tr>
+            <tr>
+                <td>台灣</td>
+                <td>4/10</td>
+                <td>7/10</td>
+                <td>0/10</td>
+                <td>4/10</td>
+                <td>5/10（中）</td>
+                <td><strong>20/50</strong></td>
+                <td><span class="badge b-yellow">P2</span></td>
+            </tr>
+            <tr>
+                <td>韓國</td>
+                <td>3/10</td>
+                <td>7/10</td>
+                <td>0/10</td>
+                <td>6/10</td>
+                <td>7/10（高）</td>
+                <td><strong>19/50</strong></td>
+                <td><span class="badge b-blue">P3</span></td>
+            </tr>
+            <tr>
+                <td>東南亞</td>
+                <td>3/10</td>
+                <td>3/10</td>
+                <td>0/10</td>
+                <td>8/10</td>
+                <td>8/10（高）</td>
+                <td><strong>14/50</strong></td>
+                <td><span class="badge b-red">P4 觀望</span></td>
+            </tr>
+        </table>
+
+        <div class="country-grid">
+            <!-- Australia -->
+            <div class="country-card">
+                <div class="flag">&#127462;&#127482;</div>
+                <h4>澳洲 Australia — P1 最優先</h4>
+                <p><strong>建築市場：</strong>$1,731.8 億 USD（2026），CAGR 4.1%<br>
+                <strong>木工服務業：</strong>$159 億 AUD，50,180 家企業<br>
+                <strong>木構造普及：</strong>住宅建築以木構造為主流</p>
+                <div class="alert alert-teal">
+                    <strong>為什麼是首選：</strong>已有 3 家經銷商（People's Tool Co、Hardware & General、DesertCart）。英語市場，營運壁壘低。木構造住宅以骨架工法為主，專業木工對鈦合金錘接受度高。錘具售價約 $500 AUD，與美國市場價格帶一致。2027 年預計缺工 30 萬人，高效工具需求迫切。
+                </div>
+                <p><strong>挑戰：</strong>市場規模相對有限、與 Stiletto（Milwaukee 旗下）直接競爭、氣動工具普及率高。</p>
+            </div>
+
+            <!-- New Zealand -->
+            <div class="country-card">
+                <div class="flag">&#127475;&#127487;</div>
+                <h4>紐西蘭 New Zealand — P1</h4>
+                <p><strong>經銷商：</strong>SIG Tools（sigtools.co.nz），88 款 Martinez 產品上架<br>
+                <strong>木構造普及：</strong>住宅以木構造為主流</p>
+                <div class="alert alert-teal">
+                    <strong>為什麼並列首選：</strong>SIG Tools 是亞太最完整的 Martinez 經銷商，已建立品牌認知。木構造建築佔比高，專業木工社群緊密。可作為澳洲市場的延伸。
+                </div>
+                <p><strong>挑戰：</strong>市場極小（人口 530 萬）、部分產品經常缺貨（Sold Out）。</p>
+            </div>
+
+            <!-- Japan -->
+            <div class="country-card">
+                <div class="flag">&#127471;&#127477;</div>
+                <h4>日本 Japan — P2 高潛力但高難度</h4>
+                <p><strong>手工具市場：</strong>亞太最大的高端手工具消費國之一<br>
+                <strong>木構造普及：</strong>超過 90% 獨棟住宅使用木構造<br>
+                <strong>高端工具 CAGR：</strong>6-9%（2026-2035）</p>
+                <div class="alert alert-gold">
+                    <strong>機會巨大但門檻極高：</strong>日本是全球木構造建築密度最高的國家，專業木工（大工）對工具品質極度講究。然而，日本有深厚的鍛造錘文化（玄能），Kakuri、Dogyu 等百年品牌根基深厚。Martinez 的「鈦合金」概念在日本是全新的品類教育挑戰。
+                </div>
+                <p><strong>進入路徑：</strong>Amazon Japan 跨境電商 > 樂天市場 > 在地經銷商。需要日語客服與行銷內容。跨境電商市場 CAGR 7.5%，2030 年達 $89.4 億 USD。</p>
+            </div>
+
+            <!-- Taiwan -->
+            <div class="country-card">
+                <div class="flag">&#127481;&#127484;</div>
+                <h4>台灣 Taiwan — P2</h4>
+                <p><strong>手工具產業：</strong>全球第三大手工具出口國，年出口額 $40 億 USD<br>
+                <strong>產業聚落：</strong>70% 集中在台中/彰化地區<br>
+                <strong>市場特性：</strong>「手工具王國」，但以 OEM 出口為主</p>
+                <div class="alert alert-gold">
+                    <strong>特殊定位：</strong>台灣是手工具製造大國但非消費大國。高端進口手工具市場小但品牌意識強——德系（Wera、Knipex）、日系（KTC、TONE）品牌已有忠實用戶。Martinez 可透過室內裝修業者與木工職人社群切入。台灣木構造建築比例低（以 RC 為主），但室內裝修木作需求穩定。
+                </div>
+                <p><strong>進入路徑：</strong>蝦皮/PChome 跨境 > 專業工具代理商（如五金行/工具專賣店） > 職人社群口碑行銷。</p>
+            </div>
+
+            <!-- Korea -->
+            <div class="country-card">
+                <div class="flag">&#127472;&#127479;</div>
+                <h4>韓國 South Korea — P3</h4>
+                <p><strong>手工具市場：</strong>預計 2030 年超過 $3.3 億 USD<br>
+                <strong>特性：</strong>偏好德系/日系高端品牌，工作空間狹小</p>
+                <div class="alert alert-blue">
+                    <strong>評估：</strong>韓國建築以混凝土結構為主，木構造比例極低。手工具市場以扣件工具（螺絲起子、套筒）和量測工具為主，骨架錘需求有限。消費者偏好緊湊、多功能設計。Martinez 的 M4 修飾錘和方尺/撬棒可能比 M1 骨架錘更有市場。專業承包商佔 55-60% 的市場量。
+                </div>
+            </div>
+
+            <!-- Southeast Asia -->
+            <div class="country-card">
+                <div class="flag">&#127468;&#127463;</div>
+                <h4>東南亞 Southeast Asia — P4 觀望</h4>
+                <p><strong>建設市場：</strong>快速成長中，GDP CAGR 4.5-5%<br>
+                <strong>泰國建設市場：</strong>$12.2 億 USD（2025），CAGR 4.94%</p>
+                <div class="alert alert-red">
+                    <strong>暫不建議進入：</strong>東南亞建築以混凝土結構為主，木構造比例低。價格敏感度極高——$335+ 的錘具完全超出市場接受範圍。專業木工群體小，且以低價工具為主。基礎建設雖快速成長，但需求集中在重型設備而非高端手工具。可待澳洲/日本市場成熟後，透過區域經銷網絡輻射。
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 競品生態 -->
+    <section id="competitor">
+        <h2>3. 亞洲競品生態分析</h2>
+
+        <h3>亞洲市場主要競爭品牌</h3>
+        <table>
+            <tr>
+                <th>品牌</th>
+                <th>國籍</th>
+                <th>主力產品</th>
+                <th>價位（USD）</th>
+                <th>亞洲市場滲透</th>
+                <th>對 Martinez 的威脅</th>
+            </tr>
+            <tr>
+                <td><strong>Stiletto</strong>（Milwaukee/TTI）</td>
+                <td>美國</td>
+                <td>全鈦合金骨架錘</td>
+                <td>$250-320</td>
+                <td><span class="badge b-yellow">中</span>（澳洲有通路）</td>
+                <td><span class="badge b-red">高</span> — 同為鈦合金錘，價格更低</td>
+            </tr>
+            <tr>
+                <td><strong>Estwing</strong></td>
+                <td>美國</td>
+                <td>一體成型鋼錘</td>
+                <td>$30-60</td>
+                <td><span class="badge b-green">高</span>（全球通路）</td>
+                <td><span class="badge b-yellow">中</span> — 不同客層但品牌認知度高</td>
+            </tr>
+            <tr>
+                <td><strong>Kakuri</strong></td>
+                <td>日本</td>
+                <td>鍛造玄能（Genno）</td>
+                <td>$28-150</td>
+                <td><span class="badge b-green">高</span>（日本國內）</td>
+                <td><span class="badge b-yellow">中</span> — 不同品類但佔據日本心佔率</td>
+            </tr>
+            <tr>
+                <td><strong>Dogyu</strong></td>
+                <td>日本</td>
+                <td>仮枠錘、拔釘器</td>
+                <td>$20-80</td>
+                <td><span class="badge b-green">高</span>（日本/亞洲）</td>
+                <td><span class="badge b-yellow">中</span> — 日本骨架錘市場的主力品牌</td>
+            </tr>
+            <tr>
+                <td><strong>Dalluge</strong></td>
+                <td>美國</td>
+                <td>鈦合金骨架錘</td>
+                <td>$80-120</td>
+                <td><span class="badge b-red">低</span></td>
+                <td><span class="badge b-yellow">中</span> — 價格更低的鈦合金選項</td>
+            </tr>
+            <tr>
+                <td><strong>Kinetic Customs</strong></td>
+                <td>美國</td>
+                <td>客製化鈦合金錘</td>
+                <td>$200-350</td>
+                <td><span class="badge b-red">低</span></td>
+                <td><span class="badge b-yellow">中</span> — 同為客製化高端錘品牌</td>
+            </tr>
+            <tr>
+                <td><strong>Wera / Knipex</strong></td>
+                <td>德國</td>
+                <td>多類手工具</td>
+                <td>各品類不同</td>
+                <td><span class="badge b-green">高</span>（亞洲全區）</td>
+                <td><span class="badge b-red">低</span> — 不同品類但佔據「高端進口工具」心佔率</td>
+            </tr>
+        </table>
+
+        <h3>亞洲 vs 歐美：錘具文化差異</h3>
+        <table>
+            <tr>
+                <th>面向</th>
+                <th>歐美（Martinez 主力市場）</th>
+                <th>日本</th>
+                <th>台灣/韓國/東南亞</th>
+            </tr>
+            <tr>
+                <td>建築結構</td>
+                <td>木構造（2x4 骨架工法）為主流</td>
+                <td>木構造（傳統軸組/2x4）超過 90%</td>
+                <td>RC 混凝土結構為主</td>
+            </tr>
+            <tr>
+                <td>錘具使用頻率</td>
+                <td>高（手工釘釘仍常見）</td>
+                <td>中高（傳統工法需要，但氣動工具增加）</td>
+                <td>低（以電動/氣動工具為主）</td>
+            </tr>
+            <tr>
+                <td>錘具偏好</td>
+                <td>鈦合金骨架錘</td>
+                <td>鍛造鋼製玄能（Genno）</td>
+                <td>一般鋼錘、橡膠錘</td>
+            </tr>
+            <tr>
+                <td>工具選購習慣</td>
+                <td>個人購買，品牌忠誠度高</td>
+                <td>職人自選，極度講究品質</td>
+                <td>公司採購為主，價格導向</td>
+            </tr>
+            <tr>
+                <td>對「美國製造」的看法</td>
+                <td>核心賣點</td>
+                <td>尊重但非決定因素（偏好國產）</td>
+                <td>有加分但價格更重要</td>
+            </tr>
+        </table>
+
+        <div class="alert alert-gold">
+            <strong>關鍵洞察：</strong>Martinez 在歐美的核心優勢（鈦合金骨架錘 + 美國製造）在亞洲部分市場並不具備同等號召力。日本有自己的鍛造錘傳統，台灣/韓國/東南亞則以 RC 結構為主，骨架錘需求有限。Martinez 需要在亞洲找到不同於歐美的價值主張。
+        </div>
+    </section>
+
+    <!-- 4. 現有亞太佈局 -->
+    <section id="current-footprint">
+        <h2>4. Martinez 現有亞太佈局</h2>
+
+        <table>
+            <tr>
+                <th>地區</th>
+                <th>經銷商</th>
+                <th>通路類型</th>
+                <th>產品覆蓋</th>
+                <th>庫存狀態</th>
+            </tr>
+            <tr>
+                <td rowspan="3"><strong>澳洲</strong></td>
+                <td>The People's Tool Co（墨爾本）</td>
+                <td>線上 + 配送全澳</td>
+                <td>錘具為主</td>
+                <td><span class="badge b-yellow">部分有貨</span></td>
+            </tr>
+            <tr>
+                <td>Hardware & General</td>
+                <td>線上 + 實體門市</td>
+                <td>錘具</td>
+                <td><span class="badge b-yellow">需確認</span></td>
+            </tr>
+            <tr>
+                <td>DesertCart Australia</td>
+                <td>跨境電商平台</td>
+                <td>全品項</td>
+                <td><span class="badge b-yellow">跨境出貨</span></td>
+            </tr>
+            <tr>
+                <td><strong>紐西蘭</strong></td>
+                <td>SIG Tools（Signature Tools）</td>
+                <td>線上 + 全球配送</td>
+                <td>88 款產品（最完整）</td>
+                <td><span class="badge b-red">多數缺貨 / Sold Out</span></td>
+            </tr>
+            <tr>
+                <td><strong>英國</strong>（輻射歐洲）</td>
+                <td>TF Tools</td>
+                <td>線上 + 有公制版方尺</td>
+                <td>錘具 + 方尺 + 撬棒</td>
+                <td><span class="badge b-green">庫存較穩</span></td>
+            </tr>
+            <tr>
+                <td><strong>日本</strong></td>
+                <td colspan="4" style="text-align:center; color:var(--red);">無經銷商、無通路、品牌認知度為零</td>
+            </tr>
+            <tr>
+                <td><strong>台灣</strong></td>
+                <td colspan="4" style="text-align:center; color:var(--red);">無經銷商、無通路、品牌認知度為零</td>
+            </tr>
+            <tr>
+                <td><strong>韓國</strong></td>
+                <td colspan="4" style="text-align:center; color:var(--red);">無經銷商、無通路、品牌認知度為零</td>
+            </tr>
+            <tr>
+                <td><strong>東南亞</strong></td>
+                <td colspan="4" style="text-align:center; color:var(--red);">無經銷商、無通路</td>
+            </tr>
+        </table>
+
+        <div class="alert alert-red">
+            <strong>現況評估：</strong>Martinez 在亞洲的佈局極度薄弱。即便在已有經銷商的澳紐，缺貨問題嚴重（SIG Tools 的 88 款產品中多數顯示 Unavailable / Sold Out），顯示供應鏈尚未能支撐亞太需求。在進入新市場之前，首先需要解決既有市場的供貨穩定性問題。
+        </div>
+    </section>
+
+    <!-- 5. 消費者特性 -->
+    <section id="consumer">
+        <h2>5. 亞洲消費者特性分析</h2>
+
+        <h3>目標客群畫像</h3>
+        <table>
+            <tr>
+                <th>客群</th>
+                <th>描述</th>
+                <th>購買動機</th>
+                <th>價格容忍度</th>
+                <th>市場潛力</th>
+            </tr>
+            <tr>
+                <td><strong>專業骨架木工</strong></td>
+                <td>全職從事木構造建築的專業職人（澳洲/日本為主）</td>
+                <td>減震、效率、耐久</td>
+                <td>$300-500 USD</td>
+                <td><span class="badge b-green">高</span></td>
+            </tr>
+            <tr>
+                <td><strong>室內裝修木工</strong></td>
+                <td>從事室內裝修、櫃體、線板等修飾工程（全亞洲）</td>
+                <td>精準、輕量、收邊品質</td>
+                <td>$100-250 USD</td>
+                <td><span class="badge b-yellow">中</span></td>
+            </tr>
+            <tr>
+                <td><strong>工具收藏家</strong></td>
+                <td>收藏高端工具的愛好者，重視品牌故事與限量款</td>
+                <td>品牌、限量、美學</td>
+                <td>$400+ USD</td>
+                <td><span class="badge b-yellow">中</span></td>
+            </tr>
+            <tr>
+                <td><strong>DIY 高端愛好者</strong></td>
+                <td>高收入、熱愛木工的業餘愛好者</td>
+                <td>品質、品牌、自我認同</td>
+                <td>$200-400 USD</td>
+                <td><span class="badge b-yellow">中</span></td>
+            </tr>
+            <tr>
+                <td><strong>營造公司採購</strong></td>
+                <td>建築公司統一採購工具</td>
+                <td>耐久、高效、減少工傷</td>
+                <td>$50-150 USD</td>
+                <td><span class="badge b-red">低</span>（價格門檻）</td>
+            </tr>
+        </table>
+
+        <h3>亞洲消費者關鍵購買因素（按重要性排序）</h3>
+        <table>
+            <tr><th>#</th><th>因素</th><th>說明</th><th>Martinez 表現</th></tr>
+            <tr>
+                <td>1</td>
+                <td>品質與耐久性</td>
+                <td>亞洲專業用戶極重視工具壽命</td>
+                <td><span class="badge b-green">強</span> 鈦合金 + 模組化 = 超長壽命</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>價格合理性</td>
+                <td>即便認可品質，價格仍是重要門檻</td>
+                <td><span class="badge b-red">弱</span> $335-385 在亞洲屬極高端</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>品牌信任度</td>
+                <td>亞洲消費者偏好已知品牌，對新品牌保守</td>
+                <td><span class="badge b-red">弱</span> 亞洲品牌認知度趨近零</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>售後服務</td>
+                <td>在地售後服務對高價產品至關重要</td>
+                <td><span class="badge b-red">弱</span> 無在地客服或維修點</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>口碑推薦</td>
+                <td>職人社群的師徒傳承與同儕推薦影響力大</td>
+                <td><span class="badge b-yellow">中</span> 歐美口碑強但亞洲傳播有限</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>產地與工藝</td>
+                <td>日本重國產，其他市場對 Made in USA 有加分</td>
+                <td><span class="badge b-yellow">中</span> 視市場而異</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 6. 定價策略 -->
+    <section id="pricing">
+        <h2>6. 定價策略與價格敏感度分析</h2>
+
+        <h3>各市場價格帶對照</h3>
+        <table>
+            <tr>
+                <th>產品</th>
+                <th>美國（原價 USD）</th>
+                <th>澳洲（估 AUD）</th>
+                <th>紐西蘭（NZD）</th>
+                <th>日本（估 JPY）</th>
+                <th>台灣（估 TWD）</th>
+            </tr>
+            <tr>
+                <td>M1 骨架錘</td>
+                <td>$335-385</td>
+                <td>~$500-580</td>
+                <td>~$550-650</td>
+                <td>~&#165;52,000-60,000</td>
+                <td>~NT$10,700-12,300</td>
+            </tr>
+            <tr>
+                <td>M4 修飾錘</td>
+                <td>$335-385</td>
+                <td>~$500-580</td>
+                <td>~$550-650</td>
+                <td>~&#165;52,000-60,000</td>
+                <td>~NT$10,700-12,300</td>
+            </tr>
+            <tr>
+                <td>鈦合金撬棒</td>
+                <td>~$100-150</td>
+                <td>~$150-230</td>
+                <td>~$170-250</td>
+                <td>~&#165;15,000-23,000</td>
+                <td>~NT$3,200-4,800</td>
+            </tr>
+            <tr>
+                <td>替換握把</td>
+                <td>~$30-50</td>
+                <td>~$45-75</td>
+                <td>$89.99</td>
+                <td>~&#165;4,600-7,800</td>
+                <td>~NT$960-1,600</td>
+            </tr>
+        </table>
+        <p style="font-size:0.82em; color:var(--muted);">* 國際價格含估算之運費、關稅與經銷商利潤加成。實際售價依匯率與通路而異。</p>
+
+        <h3>與亞洲市場本地品牌的價差分析</h3>
+        <table>
+            <tr>
+                <th>對照品牌/產品</th>
+                <th>價格（USD）</th>
+                <th>vs Martinez M1 價差</th>
+                <th>備註</th>
+            </tr>
+            <tr>
+                <td>Dogyu 仮枠錘（日本）</td>
+                <td>$20-30</td>
+                <td><strong>11-19 倍</strong></td>
+                <td>日本骨架錘的主力品牌</td>
+            </tr>
+            <tr>
+                <td>Kakuri 玄能（日本）</td>
+                <td>$28-30</td>
+                <td><strong>11-14 倍</strong></td>
+                <td>傳統鍛造錘，百年品牌</td>
+            </tr>
+            <tr>
+                <td>高端手鍛玄能（日本）</td>
+                <td>$100-150</td>
+                <td><strong>2.3-3.8 倍</strong></td>
+                <td>頂級職人手工鍛造</td>
+            </tr>
+            <tr>
+                <td>Estwing 一體成型鋼錘</td>
+                <td>$30-60</td>
+                <td><strong>5.6-12.8 倍</strong></td>
+                <td>全球最知名的專業錘具品牌</td>
+            </tr>
+            <tr>
+                <td>Stiletto TiBone 3</td>
+                <td>$250-320</td>
+                <td><strong>1.1-1.5 倍</strong></td>
+                <td>最直接的競品</td>
+            </tr>
+            <tr>
+                <td>一般鋼錘（亞洲製）</td>
+                <td>$5-20</td>
+                <td><strong>17-77 倍</strong></td>
+                <td>亞洲市場主流</td>
+            </tr>
+        </table>
+
+        <div class="alert alert-red">
+            <strong>定價挑戰：</strong>Martinez 的定價在亞洲市場面臨極端的價差挑戰。與日本本地品牌相比高出 11-19 倍，與亞洲市場主流錘具更是高出 17-77 倍。這意味著 Martinez 不能走「價格競爭」路線，只能走「價值教育」路線——讓消費者理解「為什麼一把錘值得 $385」。
+        </div>
+
+        <h3>定價策略建議</h3>
+        <ul class="check">
+            <li>維持全球統一定價策略，不做區域降價（避免品牌稀釋）</li>
+            <li>推出「入門款」產品線——如僅限亞洲的鈦合金撬棒/方尺組合包，降低首購門檻</li>
+            <li>提供「以舊換新」方案——帶任何品牌舊錘折價 $30-50 購買 Martinez</li>
+            <li>與工具租賃/試用服務合作，降低「試錯成本」</li>
+            <li>針對專業工會/協會提供團購折扣</li>
+        </ul>
+    </section>
+
+    <!-- 7. 通路策略 -->
+    <section id="channel">
+        <h2>7. 通路策略建議</h2>
+
+        <h3>各市場建議通路架構</h3>
+        <table>
+            <tr>
+                <th>市場</th>
+                <th>Phase 1（0-12 個月）</th>
+                <th>Phase 2（12-24 個月）</th>
+                <th>Phase 3（24-36 個月）</th>
+            </tr>
+            <tr>
+                <td><strong>澳洲</strong></td>
+                <td>強化現有經銷商庫存，解決缺貨問題</td>
+                <td>拓展至 Bunnings（澳洲最大五金連鎖）</td>
+                <td>建立澳洲倉儲，品牌直營線上商店</td>
+            </tr>
+            <tr>
+                <td><strong>紐西蘭</strong></td>
+                <td>穩定 SIG Tools 供貨</td>
+                <td>增加 1-2 家經銷商</td>
+                <td>與澳洲共用倉儲與物流</td>
+            </tr>
+            <tr>
+                <td><strong>日本</strong></td>
+                <td>Amazon Japan 跨境開店</td>
+                <td>尋找在地進口代理商 + 樂天市場</td>
+                <td>與專業工具連鎖（MonotaRO、Astro Products）合作</td>
+            </tr>
+            <tr>
+                <td><strong>台灣</strong></td>
+                <td>蝦皮國際跨境販售</td>
+                <td>與專業五金代理商合作（1-2 家）</td>
+                <td>PChome / momo 上架 + 職人社群推廣</td>
+            </tr>
+            <tr>
+                <td><strong>韓國</strong></td>
+                <td>Coupang Global 跨境測試</td>
+                <td>視銷量決定是否進入</td>
+                <td>--</td>
+            </tr>
+        </table>
+
+        <h3>通路策略核心原則</h3>
+        <div class="alert alert-teal">
+            <strong>1. 跨境電商先行，驗證需求：</strong>所有新市場都以跨境電商（Amazon、蝦皮、Coupang）作為第一步，以最低成本測試市場反應，確認需求後再投資在地化通路。
+        </div>
+        <div class="alert alert-teal">
+            <strong>2. 專業通路優先，大眾通路次之：</strong>Martinez 的目標客群是專業職人，優先進入專業工具店/連鎖，而非綜合五金賣場。大眾通路容易產生「價格衝擊」反效果。
+        </div>
+        <div class="alert alert-teal">
+            <strong>3. 善用 Hultafors 既有通路：</strong>母公司 Hultafors Group 在全球 50 個據點有通路資源。雖然目前主要集中在歐洲和北美，但可借助其國際經銷網絡加速亞洲佈局。
+        </div>
+    </section>
+
+    <!-- 8. 在地化 -->
+    <section id="localization">
+        <h2>8. 在地化與產品調整建議</h2>
+
+        <table>
+            <tr>
+                <th>面向</th>
+                <th>澳洲/紐西蘭</th>
+                <th>日本</th>
+                <th>台灣</th>
+            </tr>
+            <tr>
+                <td><strong>語言</strong></td>
+                <td>英語（無需調整）</td>
+                <td>日語網站、包裝、客服為必要條件</td>
+                <td>繁體中文產品說明、社群內容</td>
+            </tr>
+            <tr>
+                <td><strong>量測單位</strong></td>
+                <td>公制（已有公制方尺版本）</td>
+                <td>公制（毫米為主）</td>
+                <td>公制</td>
+            </tr>
+            <tr>
+                <td><strong>產品調整</strong></td>
+                <td>無需大幅調整，木構造工法相似</td>
+                <td>考慮較短握把版本（日本木工習慣更短的工具）；推出配合日式仮枠工法的錘頭</td>
+                <td>強調 M4 修飾錘（室內裝修導向）；撬棒/方尺可能比錘更有切入機會</td>
+            </tr>
+            <tr>
+                <td><strong>認證/法規</strong></td>
+                <td>澳洲標準認證（AS/NZS）</td>
+                <td>JIS 標準認證可能需要；PSC 安全認證視品類而定</td>
+                <td>CNS 標準（參考用，非強制）；經濟部商品安全標章</td>
+            </tr>
+            <tr>
+                <td><strong>包裝</strong></td>
+                <td>現有包裝即可</td>
+                <td>日文包裝、精緻化（日本消費者極重視包裝品質）</td>
+                <td>繁中說明書即可</td>
+            </tr>
+            <tr>
+                <td><strong>客服</strong></td>
+                <td>英語客服（現有即可）</td>
+                <td>日語客服為必要條件</td>
+                <td>中文客服（可透過代理商）</td>
+            </tr>
+            <tr>
+                <td><strong>付款方式</strong></td>
+                <td>信用卡、PayPal</td>
+                <td>需支持 Konbini 便利商店付款、銀行轉帳</td>
+                <td>信用卡、ATM 轉帳、貨到付款</td>
+            </tr>
+        </table>
+
+        <div class="alert alert-gold">
+            <strong>日本市場特別注意：</strong>日本消費者對產品細節極度挑剔——包裝破損、說明書缺漏、客服不流利都會嚴重影響品牌評價。進入日本市場的在地化投資不可省略。建議找一家有進口工具經驗的日本代理商，而非自行跨境經營。
+        </div>
+    </section>
+
+    <!-- 9. 行銷策略 -->
+    <section id="marketing">
+        <h2>9. 行銷策略建議</h2>
+
+        <h3>核心訊息在地化</h3>
+        <table>
+            <tr>
+                <th>市場</th>
+                <th>核心訴求</th>
+                <th>次要訴求</th>
+                <th>避免的訴求</th>
+            </tr>
+            <tr>
+                <td>澳洲/紐西蘭</td>
+                <td>「投資你的身體」—— 減震保護職人健康</td>
+                <td>模組化 = 終身工具、Made in USA 品質</td>
+                <td>避免與 Stiletto 直接比較（同源品牌，容易混淆）</td>
+            </tr>
+            <tr>
+                <td>日本</td>
+                <td>「鈦合金 × 美國職人精神」—— 傳統與創新的結合</td>
+                <td>Mark Martinez 的職人故事（日本人尊重匠人精神）</td>
+                <td>避免暗示鈦合金「優於」日本鍛造鋼——用「不同的選擇」取代</td>
+            </tr>
+            <tr>
+                <td>台灣</td>
+                <td>「專業職人的秘密武器」—— 國際頂尖工具品牌</td>
+                <td>鈦合金科技、客製化個性</td>
+                <td>避免強調「美國製造」溢價——台灣是手工具出口大國，對此不一定買單</td>
+            </tr>
+        </table>
+
+        <h3>各市場行銷戰術</h3>
+
+        <h4>澳洲/紐西蘭</h4>
+        <ul class="check">
+            <li>贊助澳洲木工競賽（如 WorldSkills Australia — Carpentry）</li>
+            <li>與澳洲建築 YouTuber / TikToker 合作開箱評測</li>
+            <li>在 Carpentry Australia 等行業協會投放內容</li>
+            <li>參加 Sydney Build Expo / BuildNZ 等建築展</li>
+            <li>提供「工地試用 30 天」計畫，降低購買門檻</li>
+        </ul>
+
+        <h4>日本</h4>
+        <ul class="check">
+            <li>與日本木工 YouTuber（大工系頻道）合作測試</li>
+            <li>投稿日本建築專業媒體（建築技術、日経アーキテクチュア）</li>
+            <li>在 Instagram / X 日本木工社群投放精準廣告</li>
+            <li>參加 JAPAN DIY HOMECENTER SHOW</li>
+            <li>製作 Mark Martinez 的職人紀錄短片（日語字幕），在日本社群投放</li>
+        </ul>
+
+        <h4>台灣</h4>
+        <ul class="check">
+            <li>與台灣木工 / 室內裝修 KOL 合作開箱（FB 社團、YouTube）</li>
+            <li>在「木工同業交流」「裝潢大小事」等 FB 社團投放內容</li>
+            <li>與台灣國際五金展（TiTE x IHT）合作參展</li>
+            <li>在蝦皮開設品牌旗艦店，搭配台灣常用的直播帶貨模式</li>
+            <li>與木工教室/工作坊合作，提供教學用錘具</li>
+        </ul>
+
+        <h3>社群策略</h3>
+        <table>
+            <tr>
+                <th>平台</th>
+                <th>澳洲/紐西蘭</th>
+                <th>日本</th>
+                <th>台灣</th>
+            </tr>
+            <tr>
+                <td>Instagram</td>
+                <td><span class="badge b-green">主力</span></td>
+                <td><span class="badge b-green">主力</span></td>
+                <td><span class="badge b-yellow">輔助</span></td>
+            </tr>
+            <tr>
+                <td>YouTube</td>
+                <td><span class="badge b-green">重要</span></td>
+                <td><span class="badge b-green">重要</span></td>
+                <td><span class="badge b-green">重要</span></td>
+            </tr>
+            <tr>
+                <td>TikTok</td>
+                <td><span class="badge b-green">成長中</span></td>
+                <td><span class="badge b-yellow">中</span></td>
+                <td><span class="badge b-green">重要</span></td>
+            </tr>
+            <tr>
+                <td>Facebook</td>
+                <td><span class="badge b-yellow">輔助</span></td>
+                <td><span class="badge b-red">低</span></td>
+                <td><span class="badge b-green">主力</span>（FB 社團影響力大）</td>
+            </tr>
+            <tr>
+                <td>X (Twitter)</td>
+                <td><span class="badge b-red">低</span></td>
+                <td><span class="badge b-green">重要</span>（日本 X 活躍度高）</td>
+                <td><span class="badge b-red">低</span></td>
+            </tr>
+            <tr>
+                <td>LINE</td>
+                <td><span class="badge b-red">N/A</span></td>
+                <td><span class="badge b-green">主力</span>（LINE 官方帳號）</td>
+                <td><span class="badge b-green">主力</span>（LINE 社群/OA）</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 10. 風險評估 -->
+    <section id="risk">
+        <h2>10. 風險評估與因應</h2>
+
+        <table>
+            <tr>
+                <th>風險</th>
+                <th>可能性</th>
+                <th>影響</th>
+                <th>因應策略</th>
+            </tr>
+            <tr>
+                <td><strong>品牌認知度不足</strong><br>亞洲消費者不認識 Martinez，無法理解高價合理性</td>
+                <td><span class="badge b-red">高</span></td>
+                <td><span class="badge b-red">高</span></td>
+                <td>以 Mark Martinez 的創辦人故事（Stiletto 發明者）作為品牌教育的切入點。「發明鈦合金錘的人」比「一個美國工具品牌」更有記憶點。</td>
+            </tr>
+            <tr>
+                <td><strong>價格衝擊</strong><br>消費者對 $385 的錘具產生排斥，覺得「不值得」</td>
+                <td><span class="badge b-red">高</span></td>
+                <td><span class="badge b-red">高</span></td>
+                <td>用「每日成本」重新框架價格：$385 ÷ 10 年 ÷ 250 工作天 = $0.15/天。搭配試用計畫降低心理障礙。</td>
+            </tr>
+            <tr>
+                <td><strong>文化抵抗（日本）</strong><br>日本木工對傳統鍛造錘有深厚情感，排斥外來品牌</td>
+                <td><span class="badge b-yellow">中高</span></td>
+                <td><span class="badge b-yellow">中</span></td>
+                <td>定位為「額外選擇」而非「替代品」。強調鈦合金對身體保護的科學數據。找到認同鈦合金的日本 KOL 作為先鋒。</td>
+            </tr>
+            <tr>
+                <td><strong>供應鏈不穩</strong><br>限量生產模式導致亞洲經銷商長期缺貨</td>
+                <td><span class="badge b-red">高</span></td>
+                <td><span class="badge b-red">高</span></td>
+                <td>與 Hultafors 協調擴大產能。為亞太市場設定專屬配額。在澳洲建立區域倉儲。</td>
+            </tr>
+            <tr>
+                <td><strong>仿冒/低價競品</strong><br>亞洲出現鈦合金錘仿品，以低價搶市</td>
+                <td><span class="badge b-yellow">中</span></td>
+                <td><span class="badge b-yellow">中</span></td>
+                <td>強化「模組化」和「客製化」等仿品難以複製的差異點。申請亞太地區商標與專利保護。</td>
+            </tr>
+            <tr>
+                <td><strong>匯率波動</strong><br>美元對亞洲貨幣匯率波動影響售價</td>
+                <td><span class="badge b-yellow">中</span></td>
+                <td><span class="badge b-yellow">中</span></td>
+                <td>以美元計價、經銷商承擔匯率風險。或設定季度調價機制。</td>
+            </tr>
+            <tr>
+                <td><strong>Hultafors 收購後品牌稀釋</strong><br>母公司追求量產與成本優化，犧牲手工品質</td>
+                <td><span class="badge b-yellow">中</span></td>
+                <td><span class="badge b-red">高</span></td>
+                <td>密切觀察產品品質變化。任何品質下降的跡象都會在社群迅速擴散。</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 11. 路線圖 -->
+    <section id="roadmap">
+        <h2>11. 市場進入路線圖</h2>
+
+        <h3>Phase 1：鞏固澳紐基地（0-12 個月）</h3>
+        <div class="strategy-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <strong>解決供貨問題</strong> — 與 Hultafors 協調亞太配額，確保澳紐經銷商庫存穩定。SIG Tools 缺貨率需降至 20% 以下。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <strong>強化澳洲經銷網絡</strong> — 新增 2-3 家授權經銷商，覆蓋雪梨、布里斯本、珀斯等主要城市。評估進入 Bunnings 或 Total Tools 等連鎖通路。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <strong>建立品牌聲量</strong> — 贊助 2-3 位澳洲木工 KOL，參加 Sydney Build Expo。目標：Instagram 澳洲追蹤者成長 50%。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <strong>收集市場數據</strong> — 追蹤澳紐銷量、客群組成、產品偏好，作為後續市場擴展的依據。
+            </div>
+        </div>
+
+        <h3>Phase 2：跨境測試日本+台灣（12-24 個月）</h3>
+        <div class="strategy-step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+                <strong>Amazon Japan 開店</strong> — 上架 M1、M4、撬棒、方尺等核心產品。日語產品頁面、FBA 配送。月銷量目標：50 件。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">6</div>
+            <div class="step-content">
+                <strong>台灣蝦皮跨境</strong> — 上架 M4 修飾錘與特殊工具（撬棒、方尺）。搭配 FB 木工社團口碑行銷。月銷量目標：20 件。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">7</div>
+            <div class="step-content">
+                <strong>日本 KOL 合作</strong> — 找到 3-5 位認同鈦合金工具的日本大工 YouTuber，提供試用品進行測試。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">8</div>
+            <div class="step-content">
+                <strong>Mark Martinez 亞洲行</strong> — 安排創辦人訪問日本/澳洲，參加展會或工地拜訪。創辦人親自出馬是最強的品牌行銷。
+            </div>
+        </div>
+
+        <h3>Phase 3：在地化深耕（24-36 個月）</h3>
+        <div class="strategy-step">
+            <div class="step-num">9</div>
+            <div class="step-content">
+                <strong>建立亞太區域倉儲</strong> — 在澳洲設立倉儲，服務澳紐+亞洲訂單。降低運費與交貨時間。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">10</div>
+            <div class="step-content">
+                <strong>日本在地代理</strong> — 基於 Phase 2 數據，決定是否簽約日本進口代理商。目標：樂天市場上架 + MonotaRO 合作。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">11</div>
+            <div class="step-content">
+                <strong>台灣代理商</strong> — 與專業五金代理商合作，進入 PChome/momo 等主流電商平台。
+            </div>
+        </div>
+        <div class="strategy-step">
+            <div class="step-num">12</div>
+            <div class="step-content">
+                <strong>評估韓國/東南亞</strong> — 基於 Phase 1-2 的數據與資源，決定是否進入韓國市場或東南亞高端通路。
+            </div>
+        </div>
+
+        <h3>36 個月目標 KPI</h3>
+        <div class="metric-grid">
+            <div class="metric-card">
+                <div class="label">亞太年營收目標</div>
+                <div class="value">$50-80 萬</div>
+                <div class="sub">USD，佔全球營收 8-12%</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">授權經銷商</div>
+                <div class="value">8-12 家</div>
+                <div class="sub">澳紐 5-6 / 日本 2-3 / 台灣 1-2</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">月均銷量</div>
+                <div class="value">150-250 件</div>
+                <div class="sub">全亞太區合計</div>
+            </div>
+            <div class="metric-card">
+                <div class="label">品牌認知度</div>
+                <div class="value">15-25%</div>
+                <div class="sub">澳洲專業木工群體中的品牌知名度</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 12. 結論 -->
+    <section id="conclusion">
+        <h2>12. 結論與核心建議</h2>
+
+        <div class="alert alert-gold">
+            <strong>整體評估：</strong>Martinez Tools 在亞洲市場存在明確但有限的機會。品牌的鈦合金錘在木構造為主的澳洲/紐西蘭/日本有自然需求，但在 RC 結構為主的台灣/韓國/東南亞，需要轉換產品策略（從骨架錘轉向修飾錘與特殊工具）。最大的挑戰不是產品，而是價格認知與品牌教育。
+        </div>
+
+        <h3>五大核心建議</h3>
+
+        <div class="strategy-step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <strong>先穩後擴，澳洲為根</strong><br>
+                不要急於進入新市場。先把澳紐的經銷網絡做穩、供貨做好。澳洲是亞太最自然的跳板——英語、木構造、高端工具接受度高。把澳洲做成「亞太示範市場」，再向日本、台灣輻射。
+            </div>
+        </div>
+
+        <div class="strategy-step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <strong>打「健康牌」不打「價格牌」</strong><br>
+                在亞洲，$385 的錘具注定是小眾市場。不要試圖降價搶量，而要用「每日 $0.15 保護你的身體」來重新框架價格。找到有職業傷害痛點的木工群體，用真實案例說話。
+            </div>
+        </div>
+
+        <div class="strategy-step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <strong>善用創辦人 IP</strong><br>
+                Mark Martinez 作為「鈦合金錘發明者」的故事，在崇尚匠人精神的日本和注重品牌故事的台灣，是最強的行銷資產。一段 3 分鐘的創辦人紀錄短片，配上在地語言字幕，可能比任何廣告投放更有效。
+            </div>
+        </div>
+
+        <div class="strategy-step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <strong>產品策略因地制宜</strong><br>
+                不要在所有亞洲市場都主推 M1 骨架錘。在台灣/韓國等 RC 結構市場，M4 修飾錘、鈦合金撬棒、方尺可能更有切入機會。考慮為亞洲市場推出入門價位的配件組合包。
+            </div>
+        </div>
+
+        <div class="strategy-step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+                <strong>借力 Hultafors 但保持品牌獨立</strong><br>
+                Hultafors 的全球通路資源是加速亞洲佈局的關鍵。但在消費者端，Martinez 必須維持「獨立職人品牌」的形象——一旦被認為是「大集團的子品牌」，品牌溢價就會瓦解。
+            </div>
+        </div>
+
+        <div class="alert alert-teal">
+            <strong>最終結論：</strong>Martinez Tools 的亞洲之路是一條「精品路線」而非「量販路線」。品牌不需要在亞洲賣出百萬把錘，只需要在每個市場找到那一群「願意為健康和品質付出溢價的頂尖職人」。這群人數量有限，但品牌忠誠度極高，而且他們的口碑會自然擴散。耐心比速度重要。
+        </div>
+    </section>
+
+    <!-- Sources -->
+    <div class="sources">
+        <h3>資料來源</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li>• <a href="https://martineztools.com/" target="_blank">Martinez Tool Co. 官方網站</a></li>
+            <li>• <a href="https://www.hultaforsgroup.com/our-brands/martinez-tools" target="_blank">Hultafors Group — Martinez Tools</a></li>
+            <li>• <a href="https://www.coherentmarketinsights.com/market-insight/hand-tools-market-3807" target="_blank">Coherent Market Insights — Hand Tools Market 2025-2032</a></li>
+            <li>• <a href="https://www.researchandmarkets.com/report/asia-pacific-hand-tools-market" target="_blank">Research and Markets — Asia-Pacific Hand Tools Market Outlook 2030</a></li>
+            <li>• <a href="https://market.us/report/global-hand-tools-market/" target="_blank">Market.us — Global Hand Tools Market</a></li>
+            <li>• <a href="https://www.ibisworld.com/australia/industry/carpentry-services/330/" target="_blank">IBISWorld — Carpentry Services in Australia 2025</a></li>
+            <li>• <a href="https://www.mordorintelligence.com/industry-reports/australia-construction-market" target="_blank">Mordor Intelligence — Australia Construction Market</a></li>
+            <li>• <a href="https://www.bonafideresearch.com/product/6507156416/south-korea-hand-tools-market" target="_blank">Bonafide Research — South Korea Hand Tools Market 2030</a></li>
+            <li>• <a href="https://www.6wresearch.com/industry-report/taiwan-mechanical-hand-tools-market" target="_blank">6W Research — Taiwan Mechanical Hand Tools Market 2025-2031</a></li>
+            <li>• <a href="https://www.cens.com/cens/html/en/news/news_inner_63352.html" target="_blank">CENS — Taiwan Hand Tools in Global Sourcing Landscape</a></li>
+            <li>• <a href="https://taiwanhandtools.com.tw/" target="_blank">Taiwan Hand Tool Manufacturers' Association (THTMA)</a></li>
+            <li>• <a href="https://www.grandviewresearch.com/industry-analysis/japan-cross-border-import-e-commerce-market-report" target="_blank">Grand View Research — Japan Cross-border E-commerce Market 2030</a></li>
+            <li>• <a href="https://frameverk.com/en/content/beyond-the-barn-global-timber-frame-trends-2025" target="_blank">FrameVerk — Global Timber Frame Trends 2025</a></li>
+            <li>• <a href="https://marksparksolutions.com/press-releases/asia-pacific-mass-timber-market-growth" target="_blank">Mark Spark Solutions — Asia Pacific Mass Timber Market</a></li>
+            <li>• <a href="https://www.sigtools.co.nz/collections/martinez-tools" target="_blank">SIG Tools NZ — Martinez Tools Collection</a></li>
+            <li>• <a href="https://thepeoplestoolco.com.au/collections/martinez" target="_blank">The People's Tool Co AU — Martinez</a></li>
+            <li>• <a href="https://www.hg.com.au/martinez-tools-martinez-hammers/" target="_blank">Hardware & General AU — Martinez Hammers</a></li>
+            <li>• <a href="https://kakuritools.com/collections/japanese-hammer" target="_blank">Kakuri Corporation — Japanese Hammers</a></li>
+            <li>• <a href="https://www.goodsjapan.com/brands/dogyu" target="_blank">Goods Japan — Dogyu Tools</a></li>
+            <li>• <a href="https://www.woodreview.com.au/profiles/the-toolmakers-2-mark-martinez" target="_blank">Australian Wood Review — The Toolmakers: Mark Martinez</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    Martinez Tools 亞洲市場分析評估報告 — 如菓室內裝修有限公司 ・ 2026-05-25<br>
+    報告由 AI 助手賈維斯整理，資料來源截至 2026 年 5 月
+</footer>
+
+</body>
+</html>

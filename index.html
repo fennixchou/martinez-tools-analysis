@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martinez Tools 品牌產品完整分析報告</title>
+    <style>
+        :root {
+            --primary: #1a1a2e;
+            --accent: #e94560;
+            --gold: #d4a853;
+            --bg: #0f0f1a;
+            --card: #16213e;
+            --text: #eee;
+            --muted: #999;
+            --border: #2a2a4a;
+            --green: #4ade80;
+            --red: #f87171;
+            --yellow: #fbbf24;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero h1 {
+            font-size: 2.5em;
+            color: var(--gold);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .hero .subtitle {
+            font-size: 1.1em;
+            color: var(--muted);
+        }
+        .hero .date {
+            margin-top: 15px;
+            color: var(--accent);
+            font-size: 0.9em;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        .toc {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid var(--border);
+        }
+        .toc h2 {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        .toc ul {
+            list-style: none;
+            columns: 2;
+        }
+        .toc li {
+            padding: 5px 0;
+        }
+        .toc a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95em;
+        }
+        .toc a:hover { text-decoration: underline; }
+
+        section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+        }
+        section h2 {
+            color: var(--gold);
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        section h3 {
+            color: var(--accent);
+            font-size: 1.15em;
+            margin: 20px 0 10px;
+        }
+        p { margin-bottom: 12px; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.92em;
+        }
+        th {
+            background: var(--primary);
+            color: var(--gold);
+            padding: 12px 15px;
+            text-align: left;
+            border: 1px solid var(--border);
+        }
+        td {
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        tr:nth-child(even) td { background: rgba(255,255,255,0.03); }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+        .badge-green { background: rgba(74,222,128,0.15); color: var(--green); }
+        .badge-red { background: rgba(248,113,113,0.15); color: var(--red); }
+        .badge-yellow { background: rgba(251,191,36,0.15); color: var(--yellow); }
+        .badge-gold { background: rgba(212,168,83,0.15); color: var(--gold); }
+
+        .highlight-box {
+            background: rgba(233,69,96,0.08);
+            border-left: 4px solid var(--accent);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .info-box {
+            background: rgba(212,168,83,0.08);
+            border-left: 4px solid var(--gold);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .social-card {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .social-card .platform {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 5px;
+        }
+        .social-card .followers {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .social-card .detail {
+            font-size: 0.85em;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+            margin: 15px 0;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gold);
+            border: 2px solid var(--bg);
+        }
+        .timeline-year {
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 15px 0;
+        }
+        .pros, .cons {
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .pros {
+            background: rgba(74,222,128,0.05);
+            border: 1px solid rgba(74,222,128,0.2);
+        }
+        .cons {
+            background: rgba(248,113,113,0.05);
+            border: 1px solid rgba(248,113,113,0.2);
+        }
+        .pros h4 { color: var(--green); margin-bottom: 10px; }
+        .cons h4 { color: var(--red); margin-bottom: 10px; }
+        .pros ul, .cons ul {
+            list-style: none;
+            padding: 0;
+        }
+        .pros li::before { content: '✓ '; color: var(--green); font-weight: bold; }
+        .cons li::before { content: '✗ '; color: var(--red); font-weight: bold; }
+        .pros li, .cons li { padding: 4px 0; font-size: 0.93em; }
+
+        .stat-row {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+        .stat-box {
+            flex: 1;
+            min-width: 180px;
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        .stat-box .label {
+            font-size: 0.85em;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+        .stat-box .value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--muted);
+            padding: 10px 20px;
+            border-left: 3px solid var(--gold);
+            margin: 10px 0;
+        }
+        .quote .author {
+            font-style: normal;
+            color: var(--accent);
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .sources {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+        .sources h3 { color: var(--gold); margin-bottom: 10px; }
+        .sources a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.88em;
+        }
+        .sources a:hover { text-decoration: underline; }
+        .sources li { padding: 3px 0; }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: var(--muted);
+            font-size: 0.85em;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.6em; }
+            .toc ul { columns: 1; }
+            .pros-cons { grid-template-columns: 1fr; }
+            .social-grid { grid-template-columns: 1fr 1fr; }
+            section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>MARTINEZ TOOLS</h1>
+    <div class="subtitle">品牌產品完整分析報告 — 鈦合金工具的革命者</div>
+    <div class="date">報告日期：2026-05-25 ｜ 資料來源：官網 / YouTube / Facebook / Instagram / X / Threads / Reddit / 專業論壇</div>
+</div>
+
+<div class="container">
+
+    <!-- 目錄 -->
+    <div class="toc">
+        <h2>目錄</h2>
+        <ul>
+            <li><a href="#overview">1. 品牌概述</a></li>
+            <li><a href="#founder">2. 創辦人故事</a></li>
+            <li><a href="#history">3. 品牌發展歷程</a></li>
+            <li><a href="#products">4. 產品線完整分析</a></li>
+            <li><a href="#specs">5. 核心產品規格比較</a></li>
+            <li><a href="#technology">6. 核心技術與設計哲學</a></li>
+            <li><a href="#pricing">7. 價格定位與市場分析</a></li>
+            <li><a href="#competitors">8. 競品比較</a></li>
+            <li><a href="#social">9. 社群媒體經營分析</a></li>
+            <li><a href="#reviews">10. 使用者評價與口碑</a></li>
+            <li><a href="#purchase">11. 購買管道與國際配送</a></li>
+            <li><a href="#swot">12. SWOT 分析</a></li>
+            <li><a href="#conclusion">13. 總結與觀察</a></li>
+        </ul>
+    </div>
+
+    <!-- 1. 品牌概述 -->
+    <section id="overview">
+        <h2>1. 品牌概述</h2>
+
+        <div class="stat-row">
+            <div class="stat-box">
+                <div class="label">成立年份</div>
+                <div class="value">2015</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">總部位置</div>
+                <div class="value">Merced, CA</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">2021 年營收</div>
+                <div class="value">$6M USD</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">母公司</div>
+                <div class="value">Hultafors Group</div>
+            </div>
+        </div>
+
+        <p>Martinez Tool Company 由 Mark Martinez 於 2015 年在美國加州 Merced 創立，專注於為專業木工與營造人員打造高端鈦合金手工具。品牌以 <strong>「Titanium. Built Tough.」</strong> 為核心標語，所有產品 100% 美國製造（Made in USA），限量手工打造。</p>
+
+        <p>2022 年 10 月，瑞典 Hultafors Group（母公司為投資集團 Latour）收購 Martinez Tool Company。Hultafors 旗下品牌包含 Snickers Workwear、Hellberg Safety、Johnson Level 等專業工具品牌。收購後 Martinez 以獨立品牌繼續營運，維持原有的品牌定位與美國製造傳統。</p>
+
+        <div class="info-box">
+            <strong>品牌定位：</strong>「為追求精準、傳承與耐用的專業職人而生」（For pros who demand precision, legacy, and gear that outlasts the job）
+        </div>
+    </section>
+
+    <!-- 2. 創辦人故事 -->
+    <section id="founder">
+        <h2>2. 創辦人故事 — Mark Martinez</h2>
+
+        <div class="quote">
+            "Anything you do in your life where there is passion involved, you're going to do it better."
+            <div class="author">— Mark Martinez, 創辦人</div>
+        </div>
+
+        <p>Mark Martinez 被業界尊稱為<strong>「鈦合金錘之父」（Father of the Titanium Hammer）</strong>，擁有超過 30 年的錘具設計與現場施工經驗。</p>
+
+        <h3>從木工到發明家</h3>
+        <p>Mark 原本是南加州的現場木工（on-site carpenter）。1990 年代末期，他觀察到南加州的木工師傅會在錘頭上刻出凹槽來放置釘子，實現單手起釘。他靈機一動，借了 $60,000 美元貸款，開始設計全新的鈦合金錘具原型——在錘頭加入磁鐵固定釘子，並在握把中加入拔釘功能。</p>
+
+        <h3>Stiletto Tools 傳奇</h3>
+        <p>2000 年左右，Mark 以 <strong>Stiletto Tools</strong> 品牌推出了全球首款實心鈦合金骨架錘。Stiletto TiBone 迅速成為專業木工的夢幻逸品。2007 年，他將 Stiletto 出售給 TTI 集團（Milwaukee Tool 母公司），隨後履行五年合約義務繼續在 Milwaukee 工作。</p>
+
+        <h3>再次創業</h3>
+        <p>2012 年合約期滿後，Mark 暫時轉行種植杏仁樹。但工具設計的熱情驅使他在 2015 年創立 Martinez Tool Company，帶來更進化的模組化設計——鈦合金握把搭配可更換鋼製錘頭，解決了 Stiletto 全鈦錘的痛點。</p>
+    </section>
+
+    <!-- 3. 品牌發展歷程 -->
+    <section id="history">
+        <h2>3. 品牌發展歷程</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-year">1990s 末期</span> — Mark Martinez 開始設計首款鈦合金錘具原型，借貸 $60,000 啟動研發
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">~2000</span> — 以 Stiletto Tools 品牌推出全球首款實心鈦合金骨架錘（TiBone）
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2007</span> — 將 Stiletto Tools 出售給 TTI 集團（Milwaukee Tool 母公司）
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2012</span> — 離開 Milwaukee，短暫從事農業
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2015</span> — 創立 Martinez Tool Company，推出全新模組化鈦合金錘系列
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2016</span> — 開設 X（Twitter）帳號，參加 JLC Live 等專業工具展
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2017</span> — M1 骨架錘獲 Journal of Light Construction 專業實測推薦
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2021</span> — 年營收達 $600 萬美元，高雙位數成長，利潤率超越 Hultafors Group 平均
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2022 年 10 月</span> — Hultafors Group 收購 Martinez Tool Company，維持獨立品牌運營
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2025-2026</span> — 推出 M80 重型錘、與 Atlas 46 合作推出戰術尼龍工具袋系列、12 吋鈦合金拔釘器
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 產品線完整分析 -->
+    <section id="products">
+        <h2>4. 產品線完整分析</h2>
+
+        <h3>一、錘具系列（核心產品）</h3>
+        <table>
+            <tr>
+                <th>型號</th>
+                <th>類型</th>
+                <th>錘頭重量</th>
+                <th>等效打擊力</th>
+                <th>握把長度</th>
+                <th>主要用途</th>
+                <th>參考價格</th>
+            </tr>
+            <tr>
+                <td><strong>M1</strong></td>
+                <td>骨架錘（Framing）</td>
+                <td>15 oz 鋼製</td>
+                <td>≈ 21 oz 鋼錘</td>
+                <td>16" (415mm)</td>
+                <td>骨架、屋頂、一般釘釘</td>
+                <td>~$335-385</td>
+            </tr>
+            <tr>
+                <td><strong>M4</strong></td>
+                <td>修飾錘（Finishing）</td>
+                <td>12 oz 鋼製</td>
+                <td>≈ 16 oz 鋼錘</td>
+                <td>14" (364mm)</td>
+                <td>修飾、線板、櫃體安裝</td>
+                <td>~$335-385</td>
+            </tr>
+            <tr>
+                <td><strong>M2</strong></td>
+                <td>磚工錘（Brickhead）</td>
+                <td>--</td>
+                <td>--</td>
+                <td>可搭配 MK18</td>
+                <td>砌磚、石材</td>
+                <td>需確認</td>
+            </tr>
+            <tr>
+                <td><strong>M80</strong></td>
+                <td>重型錘（Sledgehead）</td>
+                <td>36 oz</td>
+                <td>--</td>
+                <td>--</td>
+                <td>拆除、混凝土、模板</td>
+                <td>需確認</td>
+            </tr>
+            <tr>
+                <td><strong>MK18</strong></td>
+                <td>短柄精準型</td>
+                <td>--</td>
+                <td>--</td>
+                <td>10"</td>
+                <td>精準敲擊</td>
+                <td>需確認</td>
+            </tr>
+        </table>
+
+        <div class="highlight-box">
+            <strong>Legends Collection（限量系列）：</strong>Murdered-Out M1、Joker M1、Red Headed Stepchild M1、Sasquatch M1 — 特殊配色限量款，定價 $384.84，經常售罄。
+        </div>
+
+        <h3>二、量測工具系列</h3>
+        <table>
+            <tr><th>產品</th><th>特色</th></tr>
+            <tr><td>2-in-1 Rapid Square 7"</td><td>快速角度量測，英制/公制雙版本</td></tr>
+            <tr><td>Micro Square</td><td>小型精準方尺，修飾工程用</td></tr>
+            <tr><td>Large Framing Square</td><td>大型骨架方尺</td></tr>
+            <tr><td>Titanium Speed Square</td><td>鈦合金速尺，美國製造</td></tr>
+            <tr><td>Stair Gauges</td><td>樓梯規，精準樓梯施工</td></tr>
+        </table>
+
+        <h3>三、特殊工具系列</h3>
+        <table>
+            <tr><th>產品</th><th>特色</th></tr>
+            <tr><td>Titanium Pry Bar</td><td>鈦合金撬棒，輕量高強度，不損傷表面</td></tr>
+            <tr><td>12" Titanium Framing Nail Puller</td><td>鈦合金拔釘器（2026 年新品）</td></tr>
+            <tr><td>Pencil / Keel Holder</td><td>工地用鉛筆/蠟筆固定器</td></tr>
+        </table>
+
+        <h3>四、配件與周邊</h3>
+        <ul style="padding-left: 20px; margin-top: 10px;">
+            <li>鈦合金替換握把（多色可選）</li>
+            <li>替換錘頭（鋼製/鈦合金，光面/鍛紋）</li>
+            <li>工具袋與工具腰包（與 Atlas 46 合作系列）</li>
+            <li>硬殼收納盒</li>
+            <li>服飾周邊（帽子、T恤、帽T、面罩）</li>
+        </ul>
+    </section>
+
+    <!-- 5. 核心產品規格比較 -->
+    <section id="specs">
+        <h2>5. M1 vs M4 核心規格比較</h2>
+        <table>
+            <tr>
+                <th>比較項目</th>
+                <th>M1 骨架錘</th>
+                <th>M4 修飾錘</th>
+            </tr>
+            <tr>
+                <td>錘頭重量</td>
+                <td>15 oz（鋼製）</td>
+                <td>12 oz（鋼製）</td>
+            </tr>
+            <tr>
+                <td>等效鋼錘打擊力</td>
+                <td>~21 oz</td>
+                <td>~16 oz</td>
+            </tr>
+            <tr>
+                <td>握把長度</td>
+                <td>16" (415mm)</td>
+                <td>14" (364mm)</td>
+            </tr>
+            <tr>
+                <td>握把材質</td>
+                <td>鈦合金</td>
+                <td>鈦合金</td>
+            </tr>
+            <tr>
+                <td>錘頭形狀</td>
+                <td>圓頭，附磁鐵起釘器</td>
+                <td>平頂邊緣，附磁鐵起釘器</td>
+            </tr>
+            <tr>
+                <td>打擊面選項</td>
+                <td>光面（Smooth）/ 鍛紋（Milled）</td>
+                <td>光面（Smooth）/ 凹點（Dimpled）</td>
+            </tr>
+            <tr>
+                <td>最佳應用場景</td>
+                <td>骨架施工、屋頂、重釘作業</td>
+                <td>修飾工程、線板、窄空間作業</td>
+            </tr>
+            <tr>
+                <td>模組化</td>
+                <td>錘頭、握把可互換（與 M4 通用）</td>
+                <td>錘頭、握把可互換（與 M1 通用）</td>
+            </tr>
+            <tr>
+                <td>鎖定扭力</td>
+                <td colspan="2">47 Nm（牛頓米）</td>
+            </tr>
+        </table>
+
+        <div class="info-box">
+            <strong>模組化優勢：</strong>M1 和 M4 的錘頭與握把完全互通，用戶可以自由搭配（如 M1 錘頭 + M4 短握把），實現高度客製化。所有零件均可單獨購買替換，大幅延長工具壽命。
+        </div>
+    </section>
+
+    <!-- 6. 核心技術與設計哲學 -->
+    <section id="technology">
+        <h2>6. 核心技術與設計哲學</h2>
+
+        <h3>鈦合金握把 + 鋼製錘頭 = 最佳組合</h3>
+        <p>不同於全鈦合金錘（如 Stiletto TiBone），Martinez 採用「鈦合金用在需要的地方，鋼用在想要的地方」的設計哲學。鈦合金握把提供輕量與減震，鋼製錘頭提供耐久性與打擊力——這是 Mark Martinez 在設計 Stiletto 後的進化思路。</p>
+
+        <h3>六大技術亮點</h3>
+        <table>
+            <tr><th>技術特點</th><th>說明</th><th>用戶效益</th></tr>
+            <tr>
+                <td><strong>模組化設計</strong></td>
+                <td>錘頭、握把、防滑套均可獨立更換</td>
+                <td>零件磨損只換零件，不用換整把錘</td>
+            </tr>
+            <tr>
+                <td><strong>鈦合金減震</strong></td>
+                <td>鈦合金握把大幅降低衝擊反饋</td>
+                <td>長時間作業減少手腕、手肘傷害</td>
+            </tr>
+            <tr>
+                <td><strong>前置重心</strong></td>
+                <td>錘頭比同級產品重，重心前移</td>
+                <td>更大打擊力，更少揮動次數</td>
+            </tr>
+            <tr>
+                <td><strong>磁鐵起釘器</strong></td>
+                <td>錘頭內建磁鐵固定釘子</td>
+                <td>單手起釘，提升效率</td>
+            </tr>
+            <tr>
+                <td><strong>側面拔釘器</strong></td>
+                <td>比傳統設計更長更薄</td>
+                <td>拔釘更省力、更精準</td>
+            </tr>
+            <tr>
+                <td><strong>客製化選項</strong></td>
+                <td>錘面、握把形狀、顏色均可選擇</td>
+                <td>打造專屬個人工具</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 7. 價格定位與市場分析 -->
+    <section id="pricing">
+        <h2>7. 價格定位與市場分析</h2>
+
+        <h3>價格帶分布</h3>
+        <table>
+            <tr><th>產品類別</th><th>價格範圍（USD）</th><th>價格範圍（TWD 估算）</th><th>定位</th></tr>
+            <tr>
+                <td>客製化錘具</td>
+                <td>$335 ~ $385</td>
+                <td>約 NT$10,700 ~ 12,300</td>
+                <td><span class="badge badge-gold">超高端</span></td>
+            </tr>
+            <tr>
+                <td>限量系列（Legends）</td>
+                <td>$385+</td>
+                <td>約 NT$12,300+</td>
+                <td><span class="badge badge-gold">收藏級</span></td>
+            </tr>
+            <tr>
+                <td>鈦合金撬棒</td>
+                <td>$80 ~ $150（估）</td>
+                <td>約 NT$2,500 ~ 4,800</td>
+                <td><span class="badge badge-yellow">高端</span></td>
+            </tr>
+            <tr>
+                <td>量測工具（方尺）</td>
+                <td>$30 ~ $80（估）</td>
+                <td>約 NT$960 ~ 2,500</td>
+                <td><span class="badge badge-yellow">高端</span></td>
+            </tr>
+            <tr>
+                <td>替換握把/配件</td>
+                <td>$20 ~ $60（估）</td>
+                <td>約 NT$640 ~ 1,900</td>
+                <td><span class="badge badge-green">中高端</span></td>
+            </tr>
+        </table>
+
+        <div class="highlight-box">
+            <strong>市場定位：</strong>Martinez 錘具定價約為普通鋼錘的 10-15 倍，屬於工具市場的「奢侈品」等級。目標客群是每天使用錘具的專業骨架木工、屋頂工，而非 DIY 愛好者。品牌以「投資健康」為賣點——減少長期累積的職業傷害。
+        </div>
+    </section>
+
+    <!-- 8. 競品比較 -->
+    <section id="competitors">
+        <h2>8. 競品比較</h2>
+
+        <table>
+            <tr>
+                <th>比較項目</th>
+                <th>Martinez M1</th>
+                <th>Stiletto TiBone 3</th>
+                <th>Dalluge DDT16P</th>
+                <th>一般鋼錘</th>
+            </tr>
+            <tr>
+                <td>重量</td>
+                <td>15 oz</td>
+                <td>15 oz</td>
+                <td>16 oz</td>
+                <td>20-28 oz</td>
+            </tr>
+            <tr>
+                <td>等效打擊力</td>
+                <td>~21 oz 鋼錘</td>
+                <td>~28 oz 鋼錘</td>
+                <td>~22 oz 鋼錘</td>
+                <td>等同標示重量</td>
+            </tr>
+            <tr>
+                <td>握把材質</td>
+                <td>鈦合金</td>
+                <td>全鈦合金</td>
+                <td>鈦合金</td>
+                <td>木/玻纖/鋼</td>
+            </tr>
+            <tr>
+                <td>錘頭材質</td>
+                <td>鋼製（可換）</td>
+                <td>全鈦合金</td>
+                <td>鈦+鋼面</td>
+                <td>鋼</td>
+            </tr>
+            <tr>
+                <td>模組化</td>
+                <td><span class="badge badge-green">完全模組化</span></td>
+                <td><span class="badge badge-yellow">部分可換</span></td>
+                <td><span class="badge badge-red">不可換</span></td>
+                <td><span class="badge badge-red">不可換</span></td>
+            </tr>
+            <tr>
+                <td>反震性</td>
+                <td>極低（鈦柄+鋼頭）</td>
+                <td>極低（全鈦）</td>
+                <td>低</td>
+                <td>高</td>
+            </tr>
+            <tr>
+                <td>價格（USD）</td>
+                <td>$335-385</td>
+                <td>$250-320</td>
+                <td>$80-120</td>
+                <td>$15-50</td>
+            </tr>
+            <tr>
+                <td>產地</td>
+                <td>美國</td>
+                <td>美國</td>
+                <td>美國</td>
+                <td>各國</td>
+            </tr>
+            <tr>
+                <td>客製化</td>
+                <td><span class="badge badge-green">高（顏色、錘面、握把）</span></td>
+                <td><span class="badge badge-yellow">中</span></td>
+                <td><span class="badge badge-red">無</span></td>
+                <td><span class="badge badge-red">無</span></td>
+            </tr>
+        </table>
+
+        <div class="info-box">
+            <strong>趣味事實：</strong>Stiletto 和 Martinez 都是 Mark Martinez 的作品。他先創造了 Stiletto，賣給 Milwaukee 後再創立 Martinez Tool Company，帶來更進化的模組化設計。某種意義上，Martinez 是 Stiletto 的「精神續作」。
+        </div>
+    </section>
+
+    <!-- 9. 社群媒體經營分析 -->
+    <section id="social">
+        <h2>9. 社群媒體經營分析</h2>
+
+        <div class="social-grid">
+            <div class="social-card">
+                <div class="platform">Instagram</div>
+                <div class="followers">173K</div>
+                <div class="detail">@martineztools ・ 1,040 篇貼文<br>主力社群平台</div>
+            </div>
+            <div class="social-card">
+                <div class="platform">Facebook</div>
+                <div class="followers">25K</div>
+                <div class="detail">@MartinezToolCo（官方主頁）<br>另有 3.3K 粉專</div>
+            </div>
+            <div class="social-card">
+                <div class="platform">TikTok</div>
+                <div class="followers">2.7K</div>
+                <div class="detail">@officialmartineztoolsco<br>成長中，木工社群有病毒傳播</div>
+            </div>
+            <div class="social-card">
+                <div class="platform">YouTube</div>
+                <div class="followers">--</div>
+                <div class="detail">@MartinezToolCompany<br>產品展示與教學影片</div>
+            </div>
+            <div class="social-card">
+                <div class="platform">X (Twitter)</div>
+                <div class="followers">126</div>
+                <div class="detail">@Martineztools<br>活躍度低，非主力平台</div>
+            </div>
+            <div class="social-card">
+                <div class="platform">Threads</div>
+                <div class="followers">--</div>
+                <div class="detail">@martineztools<br>有更新，推廣新品與合作</div>
+            </div>
+        </div>
+
+        <h3>社群經營觀察</h3>
+        <table>
+            <tr><th>平台</th><th>活躍度</th><th>內容策略</th><th>觀察</th></tr>
+            <tr>
+                <td>Instagram</td>
+                <td><span class="badge badge-green">高</span></td>
+                <td>產品攝影、客製化展示、限量發售預告</td>
+                <td>主力平台，視覺導向適合展示工具美學，粉絲互動佳</td>
+            </tr>
+            <tr>
+                <td>Facebook</td>
+                <td><span class="badge badge-yellow">中</span></td>
+                <td>產品資訊、活動參展、社群互動</td>
+                <td>有兩個粉專略顯混亂，官方頁 25K 粉較活躍</td>
+            </tr>
+            <tr>
+                <td>TikTok</td>
+                <td><span class="badge badge-yellow">中</span></td>
+                <td>短影片展示、工地使用場景</td>
+                <td>粉絲數低但受木工 KOL 自發推廣，#martineztools 標籤持續成長</td>
+            </tr>
+            <tr>
+                <td>YouTube</td>
+                <td><span class="badge badge-yellow">中</span></td>
+                <td>產品介紹、使用教學、M1 vs M4 比較</td>
+                <td>官方內容為主，更多評測來自第三方 KOL 頻道</td>
+            </tr>
+            <tr>
+                <td>X (Twitter)</td>
+                <td><span class="badge badge-red">低</span></td>
+                <td>早期展會推廣，近年較少更新</td>
+                <td>僅 126 追蹤，未積極經營</td>
+            </tr>
+            <tr>
+                <td>Threads</td>
+                <td><span class="badge badge-yellow">中</span></td>
+                <td>新品公告、合作消息（如 Atlas 46）</td>
+                <td>與 Instagram 連動，有在經營但規模較小</td>
+            </tr>
+        </table>
+
+        <h3>第三方 YouTube 評測（重要 KOL）</h3>
+        <ul style="padding-left: 20px; margin-top: 10px;">
+            <li><strong>Essential Craftsman</strong> — 多部 Martinez 錘評測影片，觀看數高</li>
+            <li><strong>TF Tools</strong> — 英國經銷商，發布詳細 M1/M4 比較與買家指南</li>
+            <li><strong>ToolGuyd</strong> — 工具評測網站，發表多篇深度分析文章</li>
+            <li><strong>SlashGear</strong> — 2026 年 3 月發表「What Makes A Martinez Hammer So Special」專題</li>
+            <li><strong>Journal of Light Construction</strong> — Tim Uhler 實測推薦（專業建築媒體）</li>
+        </ul>
+    </section>
+
+    <!-- 10. 使用者評價與口碑 -->
+    <section id="reviews">
+        <h2>10. 使用者評價與口碑</h2>
+
+        <h3>專業用戶好評</h3>
+
+        <div class="quote">
+            "Once you use one you'll realise that all other hammers are inferior, the most comfortable, well balanced, powerful hammer I've ever used."
+            <div class="author">— Martinez 品牌大使推薦</div>
+        </div>
+
+        <div class="quote">
+            "The Martinez hammer is very different in feel, and comfort. Power and balance also very different."
+            <div class="author">— 古建築修復公司老闆，擁有多把錘的收藏家</div>
+        </div>
+
+        <div class="quote">
+            "After about a month of adjustment, the Stiletto TiBone felt too long. I absolutely recommend the M1."
+            <div class="author">— Tim Uhler, Pioneer Builder 首席木工（Journal of Light Construction 實測）</div>
+        </div>
+
+        <div class="pros-cons">
+            <div class="pros">
+                <h4>正面評價彙整</h4>
+                <ul>
+                    <li>鈦合金握把大幅降低長期職業傷害（手腕、手肘）</li>
+                    <li>模組化設計真正實用，零件可更換延長壽命</li>
+                    <li>側面拔釘器設計優秀，拔釘省力精準</li>
+                    <li>輕量卻打擊力強，前置重心設計高效</li>
+                    <li>橡膠防滑握把手感極佳，減震效果好</li>
+                    <li>美國手工製造，品質控管嚴格</li>
+                    <li>客製化顏色與配置滿足個性化需求</li>
+                    <li>專業木工用了 10 年錘爪仍完好</li>
+                </ul>
+            </div>
+            <div class="cons">
+                <h4>負面評價與爭議</h4>
+                <ul>
+                    <li>價格門檻高（$335-385），DIY 用戶難以負擔</li>
+                    <li>錘頭為鑄造（cast）非鍛造（forged），錘爪在極端使用下可能斷裂</li>
+                    <li>未公開鈦合金的 ANSI 合金等級代號</li>
+                    <li>需要約一個月的適應期來習慣重心前移</li>
+                    <li>限量生產導致部分款式經常缺貨</li>
+                    <li>2026 年推出面罩等非工具周邊引發部分用戶反彈</li>
+                    <li>模組化螺栓需定期檢查緊固（47 Nm 扭力）</li>
+                    <li>對於使用氣動工具的師傅來說投資效益低</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>論壇討論摘要</h3>
+        <table>
+            <tr><th>平台</th><th>討論焦點</th><th>整體風向</th></tr>
+            <tr>
+                <td>Contractor Talk</td>
+                <td>價格合理性、錘爪耐久度、模組化螺栓設計</td>
+                <td><span class="badge badge-green">偏正面</span>，專業用戶認可品質</td>
+            </tr>
+            <tr>
+                <td>Garage Journal</td>
+                <td>M4 修飾錘使用心得、Stiletto vs Martinez</td>
+                <td><span class="badge badge-green">正面</span>，買過都推薦</td>
+            </tr>
+            <tr>
+                <td>Fine Homebuilding</td>
+                <td>專業骨架錘比較、施工效率</td>
+                <td><span class="badge badge-green">專業推薦</span></td>
+            </tr>
+            <tr>
+                <td>ToolGuyd</td>
+                <td>收購後品牌走向、新品評價</td>
+                <td><span class="badge badge-yellow">觀望</span>，關注 Hultafors 收購後品質是否維持</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 11. 購買管道 -->
+    <section id="purchase">
+        <h2>11. 購買管道與國際配送</h2>
+
+        <h3>官方與授權通路</h3>
+        <table>
+            <tr><th>通路</th><th>地區</th><th>說明</th></tr>
+            <tr>
+                <td><a href="https://martineztools.com" style="color:var(--accent)">martineztools.com</a>（官網）</td>
+                <td>全球配送</td>
+                <td>官方直營，支持客製化建構器，3-5 個工作天出貨。國際訂單需自付關稅/VAT</td>
+            </tr>
+            <tr>
+                <td>Amazon</td>
+                <td>美國/國際</td>
+                <td>部分產品可購，支援國際配送</td>
+            </tr>
+            <tr>
+                <td>TF Tools（tftools.com）</td>
+                <td>英國/歐洲</td>
+                <td>英國授權經銷商，有庫存，全球配送</td>
+            </tr>
+            <tr>
+                <td>SIG Tools（sigtools.co.nz）</td>
+                <td>紐西蘭/亞太</td>
+                <td>紐西蘭授權經銷商，全球配送</td>
+            </tr>
+            <tr>
+                <td>The Hammerstroke</td>
+                <td>國際</td>
+                <td>線上經銷商</td>
+            </tr>
+            <tr>
+                <td>Atlas Machinery</td>
+                <td>美國</td>
+                <td>實體 + 線上經銷商</td>
+            </tr>
+        </table>
+
+        <h3>台灣購買方式</h3>
+        <div class="highlight-box">
+            Martinez Tools 目前<strong>在台灣沒有官方代理或實體通路</strong>。台灣消費者的購買方式：
+            <ol style="margin-top: 10px; padding-left: 20px;">
+                <li>官網直購（martineztools.com）— 全球配送，需自付國際運費與進口關稅</li>
+                <li>Amazon 國際配送 — 部分品項支援直送台灣</li>
+                <li>紐西蘭 SIG Tools — 亞太區較近，可能運費較低</li>
+                <li>代購服務（如 Buy&Ship 等轉運平台）</li>
+            </ol>
+        </div>
+    </section>
+
+    <!-- 12. SWOT 分析 -->
+    <section id="swot">
+        <h2>12. SWOT 分析</h2>
+        <table>
+            <tr>
+                <th style="width:50%; background:rgba(74,222,128,0.15); color:var(--green);">Strengths 優勢</th>
+                <th style="width:50%; background:rgba(248,113,113,0.15); color:var(--red);">Weaknesses 劣勢</th>
+            </tr>
+            <tr>
+                <td>
+                    <ul style="list-style:none; padding:0;">
+                        <li>✓ 創辦人即鈦合金錘發明者，技術與品牌故事強大</li>
+                        <li>✓ 100% 美國製造，品質控管嚴格</li>
+                        <li>✓ 獨家模組化設計，零件可互換替換</li>
+                        <li>✓ 鈦合金減震技術，保護職人健康</li>
+                        <li>✓ 高度客製化（顏色、錘面、握把）</li>
+                        <li>✓ Instagram 17.3 萬粉絲，社群影響力強</li>
+                        <li>✓ 專業媒體與 KOL 高度推薦</li>
+                        <li>✓ Hultafors 母公司資源支援全球擴展</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul style="list-style:none; padding:0;">
+                        <li>✗ 價格極高（$335-385），市場規模受限</li>
+                        <li>✗ 產品線狹窄，高度依賴錘具品類</li>
+                        <li>✗ 限量生產導致缺貨，影響轉換率</li>
+                        <li>✗ X/Twitter 經營薄弱，社群覆蓋不完整</li>
+                        <li>✗ 鑄造錘頭（非鍛造）的耐久疑慮</li>
+                        <li>✗ 未公開鈦合金等級，透明度不足</li>
+                        <li>✗ 亞洲市場無代理，國際觸及有限</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th style="background:rgba(251,191,36,0.15); color:var(--yellow);">Opportunities 機會</th>
+                <th style="background:rgba(212,168,83,0.15); color:var(--gold);">Threats 威脅</th>
+            </tr>
+            <tr>
+                <td>
+                    <ul style="list-style:none; padding:0;">
+                        <li>◆ Hultafors 全球通路加速國際擴張</li>
+                        <li>◆ 職業安全意識提升，高端減震工具需求成長</li>
+                        <li>◆ TikTok 木工社群爆發，病毒行銷潛力大</li>
+                        <li>◆ 擴展產品線至其他鈦合金手工具</li>
+                        <li>◆ 亞太市場（日本、澳洲、台灣）高端工具需求成長</li>
+                        <li>◆ 與 Atlas 46 等品牌異業合作開拓新客群</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul style="list-style:none; padding:0;">
+                        <li>▲ 收購後品牌稀釋風險——用戶擔心品質下降</li>
+                        <li>▲ 低價仿品與新進競品（如 Kinetic Customs）</li>
+                        <li>▲ 氣動工具與電動工具普及降低手工錘需求</li>
+                        <li>▲ 建築業景氣循環影響高端工具銷售</li>
+                        <li>▲ 推出非核心產品（面罩等）引發品牌定位質疑</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 13. 總結 -->
+    <section id="conclusion">
+        <h2>13. 總結與觀察</h2>
+
+        <p>Martinez Tool Company 是一個典型的<strong>「創辦人驅動型」高端利基品牌</strong>。Mark Martinez 作為鈦合金錘的發明者，賦予品牌無可取代的技術公信力與傳奇故事。品牌以「限量手工 + 美國製造 + 模組化設計」三大支柱建立了極高的溢價能力，在專業木工圈擁有近乎狂熱的擁護者。</p>
+
+        <h3>三個關鍵觀察</h3>
+
+        <div class="highlight-box">
+            <strong>1. 品牌護城河深厚但狹窄</strong><br>
+            Martinez 在鈦合金錘領域幾乎無人能敵，但產品線過度集中在單一品類。一旦手工錘需求因電動工具普及而下降，品牌增長空間將受限。Hultafors 的支持可能幫助擴展產品線，但也帶來品牌稀釋風險。
+        </div>
+
+        <div class="highlight-box">
+            <strong>2. 社群經營是核心競爭力</strong><br>
+            Instagram 17.3 萬粉絲對一個小眾手工具品牌來說極為驚人。品牌善用「工具美學」和「限量飢餓行銷」維持社群熱度。然而 X/Twitter 的荒廢和 TikTok 的低粉絲數顯示社群策略有明顯偏科，短影音時代的機會尚未充分把握。
+        </div>
+
+        <div class="highlight-box">
+            <strong>3. 「投資健康」的賣點超越工具本身</strong><br>
+            Martinez 最成功的行銷訴求不是「這把錘多好用」，而是「這把錘能保護你的身體」。對於每天揮錘數百次的專業木工來說，$385 換取數年的手腕健康，ROI 計算完全合理。這個訴求使 Martinez 從「工具品牌」升級為「職人健康品牌」。
+        </div>
+    </section>
+
+    <!-- Sources -->
+    <div class="sources">
+        <h3>資料來源</h3>
+        <ul style="list-style: none; padding: 0;">
+            <li>• <a href="https://martineztools.com/" target="_blank">Martinez Tool Co. 官方網站</a></li>
+            <li>• <a href="https://www.hultaforsgroup.com/our-brands/martinez-tools" target="_blank">Hultafors Group — Martinez Tools 品牌頁</a></li>
+            <li>• <a href="https://www.hultaforsgroup.com/news/hultafors-group-acquires-martinez-tool-company" target="_blank">Hultafors Group 收購公告</a></li>
+            <li>• <a href="https://www.slashgear.com/2109788/martinez-hammer-what-makes-so-special/" target="_blank">SlashGear — What Makes A Martinez Hammer So Special</a></li>
+            <li>• <a href="https://tftools.com/en-us/blogs/product-advise/martinez-tools-buying-guide" target="_blank">TF Tools — Martinez Tools Buying Guide</a></li>
+            <li>• <a href="https://tftools.com/en-us/blogs/product-advise/whats-the-difference-between-a-martinez-m1-m4-hammer" target="_blank">TF Tools — M1 vs M4 比較</a></li>
+            <li>• <a href="https://www.jlconline.com/tools/hand-tools/field-tested-the-martinez-m1-titanium-handled-hammers_o" target="_blank">Journal of Light Construction — M1 實測報告</a></li>
+            <li>• <a href="https://www.core77.com/posts/60470/Martinez-Tool-Companys-Modular-Hammer" target="_blank">Core77 — Martinez Modular Hammer 設計分析</a></li>
+            <li>• <a href="https://toolguyd.com/martinez-tools-3-things-to-know/" target="_blank">ToolGuyd — 3 Things to Know About Martinez Tools</a></li>
+            <li>• <a href="https://www.chainsawjournal.com/titanium-hammer/" target="_blank">Chainsaw Journal — Best Titanium Hammer 購買指南</a></li>
+            <li>• <a href="https://www.garagejournal.com/forum/threads/martinez-hammers-anyone-have-one.482301/" target="_blank">Garage Journal 論壇 — Martinez Hammers 討論</a></li>
+            <li>• <a href="https://contractorsupplymagazine.com/pages/News---20221004-Hultafors-Group-Acquires-Martinez-Tool-Company.php" target="_blank">Contractor Supply Magazine — 收購報導</a></li>
+            <li>• <a href="https://www.instagram.com/martineztools/" target="_blank">Instagram @martineztools</a></li>
+            <li>• <a href="https://www.facebook.com/MartinezToolCo/" target="_blank">Facebook @MartinezToolCo</a></li>
+            <li>• <a href="https://x.com/martineztools" target="_blank">X (Twitter) @Martineztools</a></li>
+            <li>• <a href="https://www.threads.com/@martineztools" target="_blank">Threads @martineztools</a></li>
+            <li>• <a href="https://www.tiktok.com/@officialmartineztoolsco" target="_blank">TikTok @officialmartineztoolsco</a></li>
+            <li>• <a href="https://www.youtube.com/@MartinezToolCompany" target="_blank">YouTube @MartinezToolCompany</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<footer>
+    Martinez Tools 品牌產品完整分析報告 — 如菓室內裝修有限公司 ・ 2026-05-25<br>
+    報告由 AI 助手賈維斯整理，資料來源截至 2026 年 5 月
+</footer>
+
+</body>
+</html>
