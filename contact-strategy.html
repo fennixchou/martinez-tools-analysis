@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martinez Tools — 台灣代理聯繫策略方案</title>
+    <style>
+        :root {
+            --bg: #0b1120;
+            --card: #151d30;
+            --primary: #0d1526;
+            --gold: #d4a853;
+            --accent: #e94560;
+            --teal: #2ec4b6;
+            --text: #e8e8e8;
+            --muted: #7a8ba8;
+            --border: #1e2d4a;
+            --green: #4ade80;
+            --red: #f87171;
+            --yellow: #fbbf24;
+            --blue: #60a5fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+
+        .hero {
+            background: linear-gradient(135deg, #0d1526 0%, #151d30 50%, #0f2840 100%);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero h1 { font-size: 2.2em; color: var(--gold); letter-spacing: 2px; margin-bottom: 6px; }
+        .hero .sub { font-size: 1.1em; color: var(--text); }
+        .hero .date { margin-top: 10px; color: var(--muted); font-size: 0.88em; }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 30px 20px; }
+
+        section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        section h2 {
+            color: var(--gold);
+            font-size: 1.3em;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+        section h3 { color: var(--accent); font-size: 1.05em; margin: 18px 0 8px; }
+        p { margin-bottom: 10px; font-size: 0.93em; }
+        ul { padding-left: 20px; margin-bottom: 12px; }
+        li { padding: 3px 0; font-size: 0.92em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.88em; }
+        th {
+            background: var(--primary);
+            color: var(--gold);
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--border);
+            font-size: 0.88em;
+        }
+        th.center { text-align: center; }
+        td {
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        td.center { text-align: center; }
+        tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+        .strategy-card {
+            background: var(--primary);
+            border-radius: 12px;
+            padding: 22px;
+            margin-bottom: 18px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+        .strategy-card h4 { color: var(--gold); font-size: 1.1em; margin-bottom: 8px; }
+        .strategy-card .priority {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            padding: 3px 12px;
+            border-radius: 14px;
+            font-size: 0.78em;
+            font-weight: bold;
+        }
+        .priority-high { background: rgba(233,69,96,0.15); color: var(--accent); }
+        .priority-mid { background: rgba(251,191,36,0.15); color: var(--yellow); }
+        .priority-low { background: rgba(74,222,128,0.15); color: var(--green); }
+        .strategy-card .meta { color: var(--muted); font-size: 0.85em; margin-bottom: 10px; }
+        .strategy-card .contact-info {
+            background: rgba(46,196,182,0.06);
+            border: 1px solid rgba(46,196,182,0.15);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 0.9em;
+        }
+        .strategy-card .contact-info a { color: var(--teal); text-decoration: none; }
+        .strategy-card .contact-info a:hover { text-decoration: underline; }
+
+        .highlight {
+            background: rgba(212,168,83,0.07);
+            border-left: 4px solid var(--gold);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.92em;
+        }
+        .highlight-teal {
+            background: rgba(46,196,182,0.07);
+            border-left: 4px solid var(--teal);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.92em;
+        }
+        .highlight-red {
+            background: rgba(233,69,96,0.07);
+            border-left: 4px solid var(--accent);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.92em;
+        }
+
+        .stat-row { display: flex; gap: 12px; margin: 14px 0; flex-wrap: wrap; }
+        .stat-box {
+            flex: 1; min-width: 140px;
+            background: var(--primary); border-radius: 10px; padding: 16px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .stat-box .label { font-size: 0.78em; color: var(--muted); margin-bottom: 3px; }
+        .stat-box .value { font-size: 1.4em; font-weight: bold; color: var(--gold); }
+        .stat-box .sub { font-size: 0.75em; color: var(--teal); margin-top: 2px; }
+
+        .timeline-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            align-items: flex-start;
+        }
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82em;
+            font-weight: bold;
+            color: var(--gold);
+        }
+        .timeline-content {
+            flex: 1;
+            background: var(--primary);
+            border-radius: 8px;
+            padding: 14px 18px;
+            border: 1px solid var(--border);
+        }
+        .timeline-content strong { color: var(--gold); }
+        .timeline-content .detail { color: var(--muted); font-size: 0.88em; margin-top: 4px; }
+
+        .dealer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 14px 0;
+        }
+        .dealer-card {
+            background: var(--primary);
+            border-radius: 8px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+        .dealer-card .flag { font-size: 1.5em; margin-bottom: 4px; }
+        .dealer-card .name { color: var(--text); font-weight: bold; font-size: 0.92em; }
+        .dealer-card .role { color: var(--muted); font-size: 0.8em; }
+        .dealer-card a { color: var(--teal); text-decoration: none; font-size: 0.82em; }
+
+        footer {
+            text-align: center; padding: 24px; color: var(--muted); font-size: 0.82em;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.5em; }
+            section { padding: 16px; }
+            table { font-size: 0.8em; }
+            th, td { padding: 6px 8px; }
+            .dealer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <h1>MARTINEZ TOOLS</h1>
+    <div class="sub">台灣代理引進 — 聯繫策略方案</div>
+    <div class="date">報告日期：2026-05-25 ｜ 如菓室內裝修有限公司</div>
+</div>
+
+<div class="container">
+
+    <!-- 背景分析 -->
+    <section>
+        <h2>背景分析：為什麼 Email 沒回覆？</h2>
+
+        <div class="highlight-red">
+            <strong>現況：</strong>透過 email 聯繫 Martinez Tools 未獲得回覆。
+        </div>
+
+        <p>這很正常，原因如下：</p>
+        <ul>
+            <li><strong>小團隊：</strong>Martinez 約 20 人規模，被 Hultafors 收購後組織仍在整合中</li>
+            <li><strong>信箱量大：</strong>173K Instagram 粉絲 + 一般客服信件，國際經銷詢問的處理優先級不高</li>
+            <li><strong>決策權轉移：</strong>2022 年 10 月被 Hultafors Group（瑞典）收購後，國際經銷權的決策可能已移至母公司</li>
+            <li><strong>亞洲非優先市場：</strong>目前展覽策略 100% 聚焦北美，亞洲拓展可能尚未排入議程</li>
+        </ul>
+
+        <div class="highlight">
+            <strong>策略核心：繞過 Martinez 的 info@ 信箱，直接觸及決策者。</strong><br>
+            同時建立多條聯繫管道，形成「圍繞式」接觸，確保訊息被看到。
+        </div>
+    </section>
+
+    <!-- 五大策略 -->
+    <section>
+        <h2>五大聯繫策略（依成功率排列）</h2>
+
+        <!-- 策略 1 -->
+        <div class="strategy-card">
+            <span class="priority priority-high">最高成功率</span>
+            <h4>策略一：走 Hultafors Group 總部（瑞典）國際銷售窗口</h4>
+            <p>Martinez 現在是 Hultafors Group 旗下品牌，國際經銷權的決策在母公司。Hultafors 產品已進 70 國，有成熟的經銷商評估流程。</p>
+
+            <div class="contact-info">
+                <strong>Hultafors Group 國際銷售支援</strong><br>
+                📧 Email: <a href="mailto:salessupport@hultaforsgroup.com">salessupport@hultaforsgroup.com</a><br>
+                🏢 地址: Hultafors Group Logistics, Prosta 1, Lozienica, 72-100 Goleniow, Poland<br>
+                🌐 官網: <a href="https://hultafors.com/en-gl/pages/contact" target="_blank">hultafors.com/contact</a>
+            </div>
+
+            <h3>信件重點</h3>
+            <ul>
+                <li>主旨用英文：<code>Distributor Inquiry — Martinez Tools — Taiwan Market</code></li>
+                <li>內容重點：公司背景、台灣市場規模（$4.7B）、目標通路、預估首批訂單量</li>
+                <li>附上台灣市場分析簡報連結</li>
+            </ul>
+        </div>
+
+        <!-- 策略 2 -->
+        <div class="strategy-card">
+            <span class="priority priority-high">高成功率</span>
+            <h4>策略二：LinkedIn 直接聯繫 Martinez GM — Christopher Semones</h4>
+            <p>Christopher Semones 是 Martinez Tools 的 General Manager，在 WOC 和 JLC LIVE 都是代表出席的人。LinkedIn InMail 的回覆率遠高於公司信箱。</p>
+
+            <div class="contact-info">
+                <strong>Christopher Semones</strong> — General Manager, Martinez Tools<br>
+                🔗 LinkedIn: <a href="https://www.linkedin.com/in/christopher-semones-09b48923/" target="_blank">linkedin.com/in/christopher-semones-09b48923/</a><br>
+                📍 位置: Mequon, WI（Hultafors North America 總部所在地）
+            </div>
+
+            <h3>訊息策略</h3>
+            <ul>
+                <li>短訊息（150 字以內），個人化語氣</li>
+                <li>提到具體產品（如 M4）展示你的真實了解</li>
+                <li>不要第一則訊息就附檔案 — 先邀約通話</li>
+                <li>提到 STAFDA 2026 展示你願意面對面談</li>
+            </ul>
+        </div>
+
+        <!-- 策略 3 -->
+        <div class="strategy-card">
+            <span class="priority priority-mid">中等成功率</span>
+            <h4>策略三：透過現有國際經銷商引薦</h4>
+            <p>Martinez 目前的國際經銷商與品牌團隊關係密切（TF Tools 老闆在 WOC 2025 還去工廠參觀），請現有經銷商引薦是很有效的捷徑。</p>
+
+            <div class="dealer-grid">
+                <div class="dealer-card">
+                    <div class="flag">🇬🇧</div>
+                    <div class="name">TF Tools</div>
+                    <div class="role">英國/歐洲獨家經銷</div>
+                    <a href="https://tftools.com/" target="_blank">tftools.com</a>
+                </div>
+                <div class="dealer-card">
+                    <div class="flag">🇦🇺</div>
+                    <div class="name">The People's Tool Co.</div>
+                    <div class="role">澳洲經銷商</div>
+                    <a href="https://thepeoplestoolco.com.au/" target="_blank">thepeoplestoolco.com.au</a>
+                </div>
+                <div class="dealer-card">
+                    <div class="flag">🇳🇿</div>
+                    <div class="name">SIG Tools</div>
+                    <div class="role">紐西蘭經銷商</div>
+                    <a href="https://www.sigtools.co.nz/" target="_blank">sigtools.co.nz</a>
+                </div>
+                <div class="dealer-card">
+                    <div class="flag">🇦🇺</div>
+                    <div class="name">HG Tools</div>
+                    <div class="role">澳洲經銷商</div>
+                    <a href="https://www.hg.com.au/martinez-tools-martinez-hammers/" target="_blank">hg.com.au</a>
+                </div>
+            </div>
+
+            <div class="highlight-teal">
+                <strong>推薦聯繫 TF Tools</strong> — 他們與 Martinez 團隊關係最好，WOC 2025 一起去 Milwaukee 工廠參觀，品牌忠誠度極高。請他們引薦，比自己冷聯繫有效得多。
+            </div>
+        </div>
+
+        <!-- 策略 4 -->
+        <div class="strategy-card">
+            <span class="priority priority-mid">中等成功率</span>
+            <h4>策略四：Hultafors North America 直接聯繫</h4>
+            <p>Martinez 的直屬母公司是 Hultafors North America，總部在 Wisconsin。這是 Martinez 品牌的直接管理層。</p>
+
+            <div class="contact-info">
+                <strong>Hultafors Group North America</strong><br>
+                📧 Email: <a href="mailto:info@hultaforsgroup.us">info@hultaforsgroup.us</a><br>
+                ☎️ 電話: (262) 242-1161<br>
+                🏢 地址: 6333 West Donges Bay Road, Mequon, WI 53092-4456, USA<br>
+                🔗 LinkedIn: <a href="https://www.linkedin.com/company/hultafors-group-north-america" target="_blank">Hultafors Group North America</a>
+            </div>
+        </div>
+
+        <!-- 策略 5 -->
+        <div class="strategy-card">
+            <span class="priority priority-low">最有效但需時間</span>
+            <h4>策略五：參加展覽面對面談</h4>
+            <p>展覽上 5 分鐘的面對面，比 10 封 email 都有效。從展覽交叉比對表來看，最佳機會如下：</p>
+
+            <table>
+                <tr>
+                    <th>展覽</th>
+                    <th class="center">日期</th>
+                    <th>地點</th>
+                    <th>為什麼推薦</th>
+                </tr>
+                <tr>
+                    <td><strong>STAFDA 2026</strong></td>
+                    <td class="center">11/15-17</td>
+                    <td>Anaheim, CA</td>
+                    <td>專業工具經銷商大會，展覽性質就是「品牌找經銷商」，最對口。Martinez 極可能參展（第 50 屆、已與 STAFDA 主席互動）</td>
+                </tr>
+                <tr>
+                    <td><strong>WOC 2027</strong></td>
+                    <td class="center">約 1 月</td>
+                    <td>Las Vegas, NV</td>
+                    <td>Martinez 連續參展，攤位有固定編號，直接走過去談。團隊全員出動的展覽。</td>
+                </tr>
+                <tr>
+                    <td><strong>JLC LIVE 2027</strong></td>
+                    <td class="center">3/18-20</td>
+                    <td>Providence, RI</td>
+                    <td>Martinez 連續 3 年參展且升級為 Tool Zone 指定品牌，現場可體驗全系列產品</td>
+                </tr>
+            </table>
+
+            <div class="highlight">
+                <strong>展覽面談建議：</strong><br>
+                • 先通過 email/LinkedIn 建立初步聯繫，展覽上約定面談時間<br>
+                • 準備紙本台灣市場簡報（A4 彩色列印）+ 名片<br>
+                • 帶一份小禮物（台灣特色，如茶葉），建立好印象<br>
+                • 展示你的 Instagram/社群規劃，讓他們看到你有能力經營品牌
+            </div>
+        </div>
+    </section>
+
+    <!-- Martinez 關鍵人物 -->
+    <section>
+        <h2>Martinez Tools / Hultafors 關鍵人物</h2>
+        <table>
+            <tr>
+                <th>姓名</th>
+                <th>職位</th>
+                <th>負責範圍</th>
+                <th>聯繫管道</th>
+            </tr>
+            <tr>
+                <td><strong>Mark Martinez</strong></td>
+                <td>創辦人</td>
+                <td>品牌創辦人、Stiletto TiBone 發明人。收購後角色為品牌顧問/大使</td>
+                <td>Instagram @martineztools<br>不建議直接聯繫商業事務</td>
+            </tr>
+            <tr>
+                <td><strong>Christopher Semones</strong></td>
+                <td>General Manager</td>
+                <td>Martinez Tools 日常營運、展覽出席、經銷商關係。Hultafors NA 體系內</td>
+                <td><a href="https://www.linkedin.com/in/christopher-semones-09b48923/" target="_blank" style="color:var(--teal);">LinkedIn</a>（推薦主攻）</td>
+            </tr>
+            <tr>
+                <td><strong>Chuck</strong></td>
+                <td>Operations</td>
+                <td>營運/物流。WOC 2025 團隊成員</td>
+                <td>展覽現場認識</td>
+            </tr>
+            <tr>
+                <td><strong>Matt Kitchens</strong></td>
+                <td>STAFDA 主席</td>
+                <td>非 Martinez 員工，但 WOC 2026 親訪 Martinez 攤位，有直接關係</td>
+                <td>STAFDA 展覽可間接接觸</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 行動時程表 -->
+    <section>
+        <h2>建議行動時程表</h2>
+
+        <div class="timeline-step">
+            <div class="timeline-dot">W1</div>
+            <div class="timeline-content">
+                <strong>第 1 週：三線同步發信</strong>
+                <div class="detail">
+                    • 寄信到 salessupport@hultaforsgroup.com（Hultafors 國際窗口）<br>
+                    • 寄信到 info@hultaforsgroup.us（Hultafors North America）<br>
+                    • LinkedIn 加 Christopher Semones 並發 InMail<br>
+                    • 附上台灣市場分析簡報連結
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="timeline-dot">W1</div>
+            <div class="timeline-content">
+                <strong>第 1 週同步：社群互動</strong>
+                <div class="detail">
+                    • 追蹤 @martineztools Instagram，按讚/留言近期貼文<br>
+                    • 追蹤 Hultafors Group LinkedIn 公司頁面<br>
+                    • 建立品牌可見度，讓他們注意到你
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="timeline-dot">W2</div>
+            <div class="timeline-content">
+                <strong>第 2 週：TF Tools 引薦</strong>
+                <div class="detail">
+                    • 如果第 1 週沒收到回覆，聯繫 TF Tools 請求引薦<br>
+                    • 語氣真誠，說明你是台灣的同行，希望成為亞太區經銷商<br>
+                    • 提到你看過他們的 WOC 2025 工廠參觀報導
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="timeline-dot">W3</div>
+            <div class="timeline-content">
+                <strong>第 3 週：Follow Up</strong>
+                <div class="detail">
+                    • 對 Hultafors 國際 + North America 發送簡短 follow up 信（2-3 句即可）<br>
+                    • LinkedIn 再發一則訊息給 Chris<br>
+                    • 如果有 TF Tools 回覆，請求正式引薦
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="timeline-dot">W4</div>
+            <div class="timeline-content">
+                <strong>第 4 週：電話聯繫</strong>
+                <div class="detail">
+                    • 如果仍無回覆，直接打電話到 Hultafors North America：(262) 242-1161<br>
+                    • 要求轉接 Martinez Tools 的經銷商業務窗口<br>
+                    • 電話通常比 email 更難被忽略
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-step">
+            <div class="timeline-dot">Q4</div>
+            <div class="timeline-content">
+                <strong>第四季：面對面會面</strong>
+                <div class="detail">
+                    • 如果所有遠端管道都失敗 — 報名 STAFDA 2026（11/15-17, Anaheim）<br>
+                    • 準備紙本簡報、名片、小禮物<br>
+                    • 直接在展覽上找到 Martinez / Hultafors 攤位面談<br>
+                    • 5 分鐘面對面 > 20 封 email
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 準備清單 -->
+    <section>
+        <h2>發信前準備清單</h2>
+        <table>
+            <tr>
+                <th style="width:8%;">✓</th>
+                <th>項目</th>
+                <th>狀態</th>
+            </tr>
+            <tr>
+                <td class="center">✅</td>
+                <td>台灣市場分析簡報（英文）</td>
+                <td style="color:var(--green);">已完成 — <a href="taiwan-proposal.html" style="color:var(--teal);">taiwan-proposal.html</a></td>
+            </tr>
+            <tr>
+                <td class="center">✅</td>
+                <td>經銷商詢問信模板（4 封）</td>
+                <td style="color:var(--green);">已完成 — <a href="inquiry-letters.html" style="color:var(--teal);">inquiry-letters.html</a></td>
+            </tr>
+            <tr>
+                <td class="center">✅</td>
+                <td>Martinez Tools 品牌分析報告</td>
+                <td style="color:var(--green);">已完成 — <a href="index.html" style="color:var(--teal);">index.html</a></td>
+            </tr>
+            <tr>
+                <td class="center">✅</td>
+                <td>亞洲市場評估報告</td>
+                <td style="color:var(--green);">已完成 — <a href="asia-market.html" style="color:var(--teal);">asia-market.html</a></td>
+            </tr>
+            <tr>
+                <td class="center">✅</td>
+                <td>展覽參展交叉比對表</td>
+                <td style="color:var(--green);">已完成 — <a href="exhibition.html" style="color:var(--teal);">exhibition.html</a></td>
+            </tr>
+            <tr>
+                <td class="center">⬜</td>
+                <td>信件中的個人資訊欄位填寫（姓名、email、電話）</td>
+                <td style="color:var(--yellow);">待老闆填寫</td>
+            </tr>
+            <tr>
+                <td class="center">⬜</td>
+                <td>LinkedIn Premium 帳號（發 InMail 需要）</td>
+                <td style="color:var(--yellow);">建議申請</td>
+            </tr>
+            <tr>
+                <td class="center">⬜</td>
+                <td>英文版公司名片</td>
+                <td style="color:var(--yellow);">展覽前準備</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 所有報告索引 -->
+    <section>
+        <h2>Martinez Tools 研究報告索引</h2>
+        <table>
+            <tr>
+                <th>報告</th>
+                <th>說明</th>
+                <th>連結</th>
+            </tr>
+            <tr>
+                <td><strong>品牌產品分析</strong></td>
+                <td>完整品牌故事、產品線、技術規格、社群分析、SWOT</td>
+                <td><a href="index.html" style="color:var(--teal);">index.html</a></td>
+            </tr>
+            <tr>
+                <td><strong>亞洲市場評估</strong></td>
+                <td>6 國市場分析、競品、定價策略、36 個月路線圖</td>
+                <td><a href="asia-market.html" style="color:var(--teal);">asia-market.html</a></td>
+            </tr>
+            <tr>
+                <td><strong>展覽交叉比對表</strong></td>
+                <td>2024-2026 年 7 大展覽參展紀錄、趨勢分析</td>
+                <td><a href="exhibition.html" style="color:var(--teal);">exhibition.html</a></td>
+            </tr>
+            <tr>
+                <td><strong>台灣市場簡報</strong></td>
+                <td>英文版經銷提案：市場數據、通路策略、財務預測</td>
+                <td><a href="taiwan-proposal.html" style="color:var(--teal);">taiwan-proposal.html</a></td>
+            </tr>
+            <tr>
+                <td><strong>經銷商詢問信</strong></td>
+                <td>4 封英文信模板 + 21 天跟進策略</td>
+                <td><a href="inquiry-letters.html" style="color:var(--teal);">inquiry-letters.html</a></td>
+            </tr>
+            <tr>
+                <td><strong>聯繫策略方案</strong></td>
+                <td>5 大聯繫策略、關鍵人物、行動時程（本頁）</td>
+                <td><a href="contact-strategy.html" style="color:var(--teal);">contact-strategy.html</a></td>
+            </tr>
+        </table>
+    </section>
+
+</div>
+
+<footer>
+    Martinez Tools 台灣代理聯繫策略方案 — 如菓室內裝修有限公司 ・ 2026-05-25<br>
+    報告由 AI 助手瑪莉（市場開發）整理
+</footer>
+
+</body>
+</html>
