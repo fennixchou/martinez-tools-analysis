@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martinez Tools — Taiwan Market Distribution Proposal</title>
+    <style>
+        :root {
+            --bg: #0b1120;
+            --card: #151d30;
+            --primary: #0d1526;
+            --gold: #d4a853;
+            --accent: #e94560;
+            --teal: #2ec4b6;
+            --text: #e8e8e8;
+            --muted: #7a8ba8;
+            --border: #1e2d4a;
+            --green: #4ade80;
+            --blue: #60a5fa;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+
+        .hero {
+            background: linear-gradient(135deg, #0d1526 0%, #151d30 50%, #0f2840 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 3px solid var(--gold);
+        }
+        .hero .logo { font-size: 2.5em; color: var(--gold); letter-spacing: 3px; font-weight: bold; }
+        .hero h1 { font-size: 1.6em; color: var(--text); margin-top: 10px; font-weight: 400; }
+        .hero .sub { font-size: 1em; color: var(--muted); margin-top: 12px; }
+        .hero .badge-row { margin-top: 18px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .hero .badge-item { background: rgba(212,168,83,0.1); border: 1px solid var(--gold); border-radius: 20px; padding: 4px 16px; font-size: 0.85em; color: var(--gold); }
+
+        .container { max-width: 960px; margin: 0 auto; padding: 30px 20px; }
+
+        section {
+            background: var(--card);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        section h2 {
+            color: var(--gold);
+            font-size: 1.3em;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+        section h3 { color: var(--accent); font-size: 1.05em; margin: 18px 0 8px; }
+        p { margin-bottom: 10px; font-size: 0.93em; }
+        ul { padding-left: 20px; margin-bottom: 12px; }
+        li { padding: 3px 0; font-size: 0.92em; }
+
+        table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.88em; }
+        th {
+            background: var(--primary);
+            color: var(--gold);
+            padding: 10px 12px;
+            text-align: left;
+            border: 1px solid var(--border);
+            font-size: 0.88em;
+        }
+        th.center { text-align: center; }
+        td {
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        td.center { text-align: center; }
+        tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+
+        .stat-row { display: flex; gap: 12px; margin: 14px 0; flex-wrap: wrap; }
+        .stat-box {
+            flex: 1; min-width: 140px;
+            background: var(--primary); border-radius: 10px; padding: 16px;
+            text-align: center; border: 1px solid var(--border);
+        }
+        .stat-box .label { font-size: 0.78em; color: var(--muted); margin-bottom: 3px; }
+        .stat-box .value { font-size: 1.4em; font-weight: bold; color: var(--gold); }
+        .stat-box .sub { font-size: 0.75em; color: var(--teal); margin-top: 2px; }
+
+        .highlight {
+            background: rgba(212,168,83,0.07);
+            border-left: 4px solid var(--gold);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.92em;
+        }
+        .highlight-teal {
+            background: rgba(46,196,182,0.07);
+            border-left: 4px solid var(--teal);
+            padding: 14px 16px;
+            margin: 12px 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.92em;
+        }
+
+        .phase-card {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 18px;
+            border: 1px solid var(--border);
+            margin-bottom: 14px;
+        }
+        .phase-card h4 { color: var(--gold); margin-bottom: 6px; }
+        .phase-card .meta { color: var(--muted); font-size: 0.82em; margin-bottom: 8px; }
+
+        .toc {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+        }
+        .toc h3 { color: var(--gold); margin-bottom: 10px; font-size: 1em; }
+        .toc ol { padding-left: 20px; }
+        .toc li { padding: 3px 0; font-size: 0.9em; }
+        .toc a { color: var(--teal); text-decoration: none; }
+        .toc a:hover { text-decoration: underline; }
+
+        .cover-info {
+            background: var(--primary);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid var(--border);
+            font-size: 0.88em;
+            color: var(--muted);
+        }
+        .cover-info strong { color: var(--text); }
+
+        footer {
+            text-align: center; padding: 24px; color: var(--muted); font-size: 0.82em;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero .logo { font-size: 1.8em; }
+            .hero h1 { font-size: 1.2em; }
+            section { padding: 16px; }
+            table { font-size: 0.8em; }
+            th, td { padding: 6px 8px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero">
+    <div class="logo">MARTINEZ TOOLS</div>
+    <h1>Taiwan Market Distribution Proposal</h1>
+    <div class="sub">Exclusive Distributor Partnership Opportunity for the Asia-Pacific Market</div>
+    <div class="badge-row">
+        <span class="badge-item">Premium Titanium Tools</span>
+        <span class="badge-item">Untapped Market</span>
+        <span class="badge-item">$4.7B Renovation Industry</span>
+    </div>
+    <div class="cover-info">
+        <strong>Prepared by:</strong> Ru Guo Interior Design Co., Ltd. (如菓室內裝修有限公司)<br>
+        <strong>Date:</strong> May 2026<br>
+        <strong>Contact:</strong> fennix945@gmail.com<br>
+        <strong>Confidential</strong> — For Martinez Tool Co. / Hultafors Group Internal Use Only
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="toc">
+        <h3>Table of Contents</h3>
+        <ol>
+            <li><a href="#exec">Executive Summary</a></li>
+            <li><a href="#market">Taiwan Market Opportunity</a></li>
+            <li><a href="#target">Target Customer Segments</a></li>
+            <li><a href="#competitive">Competitive Landscape</a></li>
+            <li><a href="#strategy">Distribution & Channel Strategy</a></li>
+            <li><a href="#marketing">Marketing Plan</a></li>
+            <li><a href="#financial">Financial Projections</a></li>
+            <li><a href="#timeline">Implementation Timeline</a></li>
+            <li><a href="#company">About Ru Guo Interior Design</a></li>
+            <li><a href="#next">Proposed Next Steps</a></li>
+        </ol>
+    </div>
+
+    <!-- 1. Executive Summary -->
+    <section id="exec">
+        <h2>1. Executive Summary</h2>
+        <p>We are seeking to become the <strong>exclusive authorized distributor</strong> of Martinez Tool Co. products in Taiwan, with potential expansion to the broader Asia-Pacific Chinese-speaking market (Taiwan, Hong Kong, Macau).</p>
+
+        <div class="highlight">
+            <strong>Why Taiwan? Why Now?</strong><br>
+            • Taiwan's home renovation market is <strong>USD $4.7 billion</strong> (2024), growing at 5.34% CAGR<br>
+            • Taiwan is the <strong>"Kingdom of Hand Tools"</strong> — the world's 2nd largest hand tool exporter ($2.5B/year), meaning buyers deeply understand and appreciate premium tool quality<br>
+            • <strong>Zero presence</strong> of Martinez Tools in Taiwan — no authorized dealer, no local marketing, no Chinese-language support<br>
+            • Rising demand for premium, specialized hand tools among professional contractors driven by social media influence (Instagram, YouTube)<br>
+            • Hultafors Group already operates in 70 countries — Taiwan represents a natural next step in Asia-Pacific expansion
+        </div>
+
+        <div class="stat-row">
+            <div class="stat-box">
+                <div class="label">Renovation Market</div>
+                <div class="value">$4.7B</div>
+                <div class="sub">2024, CAGR 5.34%</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">Construction Output</div>
+                <div class="value">$37.4B</div>
+                <div class="sub">2025, CAGR 4.1%</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">Housing Starts</div>
+                <div class="value">127,883</div>
+                <div class="sub">Units in 2024</div>
+            </div>
+            <div class="stat-box">
+                <div class="label">E-commerce</div>
+                <div class="value">$53.2B</div>
+                <div class="sub">2026, CAGR 6.4%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Market Opportunity -->
+    <section id="market">
+        <h2>2. Taiwan Market Opportunity</h2>
+
+        <h3>2.1 Construction & Renovation Industry</h3>
+        <table>
+            <tr>
+                <th>Indicator</th>
+                <th class="center">Value</th>
+                <th>Source / Note</th>
+            </tr>
+            <tr>
+                <td>Construction market size (2025)</td>
+                <td class="center"><strong>USD $37.4B</strong></td>
+                <td>IMARC Group, CAGR 3.35% to 2034</td>
+            </tr>
+            <tr>
+                <td>Home renovation market (2024)</td>
+                <td class="center"><strong>USD $4.7B</strong></td>
+                <td>Deep Market Insights, CAGR 5.34% to 2033</td>
+            </tr>
+            <tr>
+                <td>Construction output growth (2025)</td>
+                <td class="center"><strong>+4.8%</strong></td>
+                <td>GlobalData, real-term growth</td>
+            </tr>
+            <tr>
+                <td>AAGR forecast (2026-2029)</td>
+                <td class="center"><strong>+4.1%</strong></td>
+                <td>Renewable energy & infrastructure</td>
+            </tr>
+            <tr>
+                <td>Housing starts (2024)</td>
+                <td class="center"><strong>127,883 units</strong></td>
+                <td>Key regions: Taichung (33K), Taoyuan (26K), Kaohsiung (20K)</td>
+            </tr>
+            <tr>
+                <td>Social housing program (2025-2032)</td>
+                <td class="center"><strong>250,000 units</strong></td>
+                <td>Government-funded new construction</td>
+            </tr>
+        </table>
+
+        <h3>2.2 Why Premium Hand Tools Have a Market in Taiwan</h3>
+        <ul>
+            <li><strong>Tool culture is strong:</strong> Taiwan exports $2.5B in hand tools annually — local professionals know quality and are willing to pay for it</li>
+            <li><strong>Social media influence:</strong> US/Australian construction influencers using Martinez hammers are widely followed by Taiwanese contractors on YouTube and Instagram</li>
+            <li><strong>Renovation > new build:</strong> Rising property prices push homeowners to renovate rather than buy new, increasing demand for precision finishing tools</li>
+            <li><strong>Smart home trend:</strong> Modern renovations require more specialized tools for precise installations</li>
+            <li><strong>No direct competition:</strong> No titanium hammer brand has established distribution in Taiwan</li>
+        </ul>
+
+        <h3>2.3 Taiwan's Unique Advantage as a Gateway</h3>
+        <div class="highlight-teal">
+            Taiwan can serve as a <strong>proof-of-concept market</strong> for broader Chinese-speaking Asia-Pacific expansion. Success in Taiwan demonstrates viability for Hong Kong (7.5M), Macau, and potentially Southeast Asian Chinese-speaking markets (Singapore, Malaysia). Taiwan's regulatory environment is business-friendly, with no import restrictions on hand tools and straightforward customs procedures.
+        </div>
+    </section>
+
+    <!-- 3. Target Customer Segments -->
+    <section id="target">
+        <h2>3. Target Customer Segments</h2>
+        <table>
+            <tr>
+                <th style="width:18%;">Segment</th>
+                <th style="width:15%;">Est. Size</th>
+                <th style="width:37%;">Characteristics</th>
+                <th style="width:30%;">Martinez Products Fit</th>
+            </tr>
+            <tr>
+                <td><strong>Professional Carpenters & Framers</strong></td>
+                <td class="center">~15,000</td>
+                <td>Full-time wood-frame and interior carpentry professionals. Value tool performance and durability. Willing to invest in premium tools that reduce fatigue.</td>
+                <td>M1 (15oz framing), M4 (12oz finishing), Rapid Square, Nail Pullers</td>
+            </tr>
+            <tr>
+                <td><strong>Interior Design Contractors</strong></td>
+                <td class="center">~8,000 firms</td>
+                <td>Registered interior renovation companies. Handle demolition, framing, finishing. Quality tools = quality workmanship in client eyes.</td>
+                <td>M4 finishing hammer, Nail Pullers, Pry Bars</td>
+            </tr>
+            <tr>
+                <td><strong>Construction Workers (Concrete / Masonry)</strong></td>
+                <td class="center">~48,000</td>
+                <td>Workers in concrete, masonry, and general construction. Physical labor — vibration reduction is a major selling point.</td>
+                <td>M1, M2 (brickhead), M80 (36oz sledge)</td>
+            </tr>
+            <tr>
+                <td><strong>Premium DIY / Enthusiasts</strong></td>
+                <td class="center">Growing</td>
+                <td>YouTube/IG-influenced hobbyists who collect and appreciate premium tools. Strong social media presence. Brand ambassadors.</td>
+                <td>MK18 (precision), Custom hammers, Merchandise</td>
+            </tr>
+            <tr>
+                <td><strong>Tool Retailers & Distributors</strong></td>
+                <td class="center">~2,100 shops</td>
+                <td>Hand tool specialty shops concentrated in Taichung/Changhua industrial corridor. Also online platforms (Shopee, Momo, PChome).</td>
+                <td>Full product line wholesale</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 4. Competitive Landscape -->
+    <section id="competitive">
+        <h2>4. Competitive Landscape</h2>
+
+        <h3>4.1 Current Hammer Market in Taiwan</h3>
+        <table>
+            <tr>
+                <th>Brand</th>
+                <th class="center">Origin</th>
+                <th class="center">Price Range (NTD)</th>
+                <th>Position</th>
+                <th>Taiwan Presence</th>
+            </tr>
+            <tr>
+                <td><strong>Stiletto</strong></td>
+                <td class="center">USA</td>
+                <td class="center">$8,000-12,000</td>
+                <td>Titanium, legacy brand (now owned by Milwaukee)</td>
+                <td>Limited — grey market import only</td>
+            </tr>
+            <tr>
+                <td><strong>Estwing</strong></td>
+                <td class="center">USA</td>
+                <td class="center">$1,500-3,500</td>
+                <td>Steel, mass market, widely known</td>
+                <td>Available via Amazon/import shops</td>
+            </tr>
+            <tr>
+                <td><strong>Stanley / DeWALT</strong></td>
+                <td class="center">USA</td>
+                <td class="center">$800-2,500</td>
+                <td>Mass market, brand recognition</td>
+                <td>Strong — authorized distributors</td>
+            </tr>
+            <tr>
+                <td><strong>Local / Japanese brands</strong></td>
+                <td class="center">TW / JP</td>
+                <td class="center">$300-2,000</td>
+                <td>Budget to mid-range, commodity</td>
+                <td>Dominant in volume</td>
+            </tr>
+            <tr style="background: rgba(212,168,83,0.05);">
+                <td><strong style="color:var(--gold);">Martinez Tools</strong></td>
+                <td class="center" style="color:var(--gold);">USA</td>
+                <td class="center" style="color:var(--gold);">$10,700-12,300</td>
+                <td style="color:var(--gold);">Premium titanium, customizable, Made in USA</td>
+                <td style="color:var(--accent);"><strong>None — untapped opportunity</strong></td>
+            </tr>
+        </table>
+
+        <h3>4.2 Martinez's Competitive Advantages</h3>
+        <div class="highlight">
+            <strong>Key differentiators that resonate with Taiwanese buyers:</strong><br>
+            • <strong>Titanium construction:</strong> 45% lighter than steel at equal strength — reduces repetitive strain injury<br>
+            • <strong>Customizable:</strong> Interchangeable heads, handles, and grips — appeals to the "personalization" culture strong in Taiwan<br>
+            • <strong>"Made in USA" premium:</strong> Taiwanese consumers associate American-made tools with superior quality<br>
+            • <strong>Founder story:</strong> Mark Martinez (inventor of Stiletto TiBone) — authentic craftsmanship narrative<br>
+            • <strong>Hultafors backing:</strong> Swedish parent company adds European credibility and supply chain reliability<br>
+            • <strong>Social proof:</strong> 173K Instagram followers — Taiwanese contractors already follow Martinez content
+        </div>
+    </section>
+
+    <!-- 5. Distribution Strategy -->
+    <section id="strategy">
+        <h2>5. Distribution & Channel Strategy</h2>
+
+        <h3>5.1 Multi-Channel Approach</h3>
+        <table>
+            <tr>
+                <th style="width:20%;">Channel</th>
+                <th style="width:25%;">Platform / Location</th>
+                <th style="width:30%;">Strategy</th>
+                <th style="width:25%;">Est. Revenue Share</th>
+            </tr>
+            <tr>
+                <td><strong>E-commerce (D2C)</strong></td>
+                <td>Shopee, Momo, PChome<br>+ Dedicated brand page</td>
+                <td>Primary sales channel. Leverage Taiwan's $53B e-commerce market. Free shipping, 7-day returns.</td>
+                <td class="center">40-50%</td>
+            </tr>
+            <tr>
+                <td><strong>Specialty Tool Retailers</strong></td>
+                <td>Taichung/Changhua tool corridor<br>Taipei tool shops</td>
+                <td>Authorized dealer program. In-store display with demo units. Target 10-15 premium retailers in Year 1.</td>
+                <td class="center">25-30%</td>
+            </tr>
+            <tr>
+                <td><strong>Professional Supply</strong></td>
+                <td>Interior design firms<br>Construction companies</td>
+                <td>B2B wholesale pricing. Trade show demos. Sample/trial programs for key accounts.</td>
+                <td class="center">15-20%</td>
+            </tr>
+            <tr>
+                <td><strong>Social Commerce</strong></td>
+                <td>Instagram, Facebook, LINE</td>
+                <td>Direct sales via social platforms. Live unboxing events. KOL partnerships.</td>
+                <td class="center">10-15%</td>
+            </tr>
+        </table>
+
+        <h3>5.2 Pricing Strategy</h3>
+        <table>
+            <tr>
+                <th>Product</th>
+                <th class="center">US Retail (USD)</th>
+                <th class="center">Taiwan Retail (NTD)</th>
+                <th class="center">Taiwan Retail (USD)</th>
+                <th>Notes</th>
+            </tr>
+            <tr>
+                <td>M1 Framing Hammer (15oz)</td>
+                <td class="center">$349</td>
+                <td class="center">NT$13,500</td>
+                <td class="center">~$420</td>
+                <td>+20% for import, tax, margin</td>
+            </tr>
+            <tr>
+                <td>M4 Finishing Hammer (12oz)</td>
+                <td class="center">$335</td>
+                <td class="center">NT$12,900</td>
+                <td class="center">~$400</td>
+                <td>Most relevant for TW market</td>
+            </tr>
+            <tr>
+                <td>M80 Sledgehead (36oz)</td>
+                <td class="center">$385</td>
+                <td class="center">NT$14,800</td>
+                <td class="center">~$460</td>
+                <td>Niche — concrete/demolition</td>
+            </tr>
+            <tr>
+                <td>Titanium Nail Puller</td>
+                <td class="center">$85-95</td>
+                <td class="center">NT$3,500</td>
+                <td class="center">~$109</td>
+                <td>Entry-level product for new customers</td>
+            </tr>
+            <tr>
+                <td>Rapid Square</td>
+                <td class="center">$69</td>
+                <td class="center">NT$2,800</td>
+                <td class="center">~$87</td>
+                <td>Accessory — drives repeat purchases</td>
+            </tr>
+        </table>
+        <p style="color:var(--muted);font-size:0.85em;">* Pricing includes import duties (0-5% for hand tools), shipping, and standard retail margin. Final pricing subject to wholesale cost negotiation.</p>
+    </section>
+
+    <!-- 6. Marketing Plan -->
+    <section id="marketing">
+        <h2>6. Marketing Plan</h2>
+
+        <h3>6.1 Localization Strategy</h3>
+        <ul>
+            <li><strong>Chinese-language product pages:</strong> Full product descriptions, specifications, and care guides translated to Traditional Chinese</li>
+            <li><strong>Local social media accounts:</strong> Dedicated Martinez Tools Taiwan Instagram + Facebook + LINE Official Account</li>
+            <li><strong>Customer service in Mandarin:</strong> Local phone support and LINE chat during business hours</li>
+            <li><strong>Warranty & repair:</strong> Local warranty processing — no need to ship back to the US</li>
+        </ul>
+
+        <h3>6.2 Content & Influencer Strategy</h3>
+        <table>
+            <tr>
+                <th>Activity</th>
+                <th>Timeline</th>
+                <th>Expected Impact</th>
+            </tr>
+            <tr>
+                <td>Partner with 3-5 Taiwanese construction YouTubers for review videos</td>
+                <td>Month 1-3</td>
+                <td>50K-100K views, builds awareness</td>
+            </tr>
+            <tr>
+                <td>Instagram reels: "A Day with Martinez" — local contractor stories</td>
+                <td>Ongoing</td>
+                <td>Organic community building</td>
+            </tr>
+            <tr>
+                <td>LINE Official Account with purchase support & tool tips</td>
+                <td>Month 1</td>
+                <td>Direct customer relationship channel</td>
+            </tr>
+            <tr>
+                <td>Attend Taiwan Hardware Show (THS) as exhibitor</td>
+                <td>Year 1, Oct</td>
+                <td>B2B dealer acquisition + media coverage</td>
+            </tr>
+            <tr>
+                <td>Cross-promote with interior design industry events</td>
+                <td>Quarterly</td>
+                <td>Professional market penetration</td>
+            </tr>
+        </table>
+
+        <h3>6.3 Brand Positioning in Taiwan</h3>
+        <div class="highlight-teal">
+            <strong>Proposed tagline (Traditional Chinese):</strong><br>
+            「鈦合金的力量，工匠的選擇」(The Power of Titanium, the Craftsman's Choice)<br><br>
+            <strong>Core messaging pillars:</strong><br>
+            1. <strong>Performance:</strong> 45% lighter, 10x vibration reduction — protect your body, extend your career<br>
+            2. <strong>Craftsmanship:</strong> Handcrafted in USA by Mark Martinez — the inventor of the titanium hammer<br>
+            3. <strong>Customization:</strong> Your hammer, your way — interchangeable parts for your workflow<br>
+            4. <strong>Community:</strong> Join 173K+ professionals worldwide who chose Martinez
+        </div>
+    </section>
+
+    <!-- 7. Financial Projections -->
+    <section id="financial">
+        <h2>7. Financial Projections (3-Year)</h2>
+
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th class="center">Year 1</th>
+                <th class="center">Year 2</th>
+                <th class="center">Year 3</th>
+            </tr>
+            <tr>
+                <td>Units sold (hammers)</td>
+                <td class="center">150-200</td>
+                <td class="center">400-600</td>
+                <td class="center">800-1,200</td>
+            </tr>
+            <tr>
+                <td>Units sold (accessories)</td>
+                <td class="center">300-400</td>
+                <td class="center">800-1,200</td>
+                <td class="center">1,500-2,500</td>
+            </tr>
+            <tr>
+                <td>Revenue (USD)</td>
+                <td class="center">$80K-120K</td>
+                <td class="center">$250K-400K</td>
+                <td class="center">$500K-800K</td>
+            </tr>
+            <tr>
+                <td>Authorized retailers</td>
+                <td class="center">10-15</td>
+                <td class="center">25-35</td>
+                <td class="center">40-60</td>
+            </tr>
+            <tr>
+                <td>Social media followers (TW)</td>
+                <td class="center">3K-5K</td>
+                <td class="center">10K-15K</td>
+                <td class="center">25K-40K</td>
+            </tr>
+        </table>
+
+        <h3>Initial Order Proposal</h3>
+        <div class="highlight">
+            <strong>Proposed first order:</strong> 50-80 units (mixed SKUs)<br>
+            <strong>Estimated wholesale value:</strong> USD $12,000 - $20,000<br>
+            <strong>Product mix:</strong> 60% M4 finishing hammer (best fit for TW market), 20% M1 framing, 10% nail pullers, 10% accessories<br>
+            <strong>Payment terms:</strong> Open to discussion — prepaid, LC, or NET 30
+        </div>
+
+        <p style="color:var(--muted);font-size:0.85em;">* Projections based on comparable premium tool brand introductions in Taiwan (e.g., Festool, Knipex). Actual results depend on marketing investment, pricing strategy, and product-market fit validation.</p>
+    </section>
+
+    <!-- 8. Timeline -->
+    <section id="timeline">
+        <h2>8. Implementation Timeline</h2>
+
+        <div class="phase-card">
+            <h4>Phase 1: Foundation (Month 1-3)</h4>
+            <div class="meta">Establish partnership & prepare market entry</div>
+            <ul>
+                <li>Finalize distribution agreement with Martinez / Hultafors</li>
+                <li>Set up import logistics (customs clearance, warehouse)</li>
+                <li>Create Chinese-language product content & brand assets</li>
+                <li>Launch e-commerce storefronts (Shopee, brand website)</li>
+                <li>Place initial order (50-80 units)</li>
+            </ul>
+        </div>
+
+        <div class="phase-card">
+            <h4>Phase 2: Launch (Month 4-6)</h4>
+            <div class="meta">Market entry & awareness building</div>
+            <ul>
+                <li>Launch social media campaigns (IG, FB, LINE)</li>
+                <li>Send review units to 5 Taiwanese construction influencers</li>
+                <li>Begin B2B outreach to specialty tool retailers</li>
+                <li>Host launch event / live demo at Taichung tool market</li>
+                <li>Collect early customer feedback for product-market fit</li>
+            </ul>
+        </div>
+
+        <div class="phase-card">
+            <h4>Phase 3: Growth (Month 7-12)</h4>
+            <div class="meta">Scale distribution & build community</div>
+            <ul>
+                <li>Expand to 10-15 authorized retail locations</li>
+                <li>Attend Taiwan Hardware Show (THS) as exhibitor</li>
+                <li>Launch loyalty program for repeat customers</li>
+                <li>Evaluate expansion to Hong Kong / Southeast Asia</li>
+                <li>Report Year 1 results and plan Year 2 strategy</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 9. About Us -->
+    <section id="company">
+        <h2>9. About Ru Guo Interior Design Co., Ltd.</h2>
+
+        <table>
+            <tr>
+                <th style="width:30%;">Item</th>
+                <td><strong>Details</strong></td>
+            </tr>
+            <tr>
+                <th>Company Name</th>
+                <td>如菓室內裝修有限公司 (Ru Guo Interior Design Co., Ltd.)</td>
+            </tr>
+            <tr>
+                <th>Industry</th>
+                <td>Interior design, renovation, and construction management</td>
+            </tr>
+            <tr>
+                <th>Service Areas</th>
+                <td>Northern Taiwan (Taipei, Hsinchu) + Central Taiwan (Taichung)</td>
+            </tr>
+            <tr>
+                <th>Core Business</th>
+                <td>Residential & commercial interior renovation — full-service from design to construction</td>
+            </tr>
+            <tr>
+                <th>Why Us</th>
+                <td>
+                    • <strong>Industry insider:</strong> Deep understanding of Taiwan's renovation market, contractor networks, and tool preferences<br>
+                    • <strong>Dual-region presence:</strong> Coverage in both Northern and Central Taiwan — the two largest renovation markets<br>
+                    • <strong>Digital-first:</strong> Strong social media and e-commerce capabilities for modern distribution<br>
+                    • <strong>Professional network:</strong> Direct relationships with contractors, interior designers, and tool retailers
+                </td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- 10. Next Steps -->
+    <section id="next">
+        <h2>10. Proposed Next Steps</h2>
+
+        <table>
+            <tr>
+                <th style="width:8%;">Step</th>
+                <th style="width:42%;">Action</th>
+                <th style="width:25%;">Timeline</th>
+                <th style="width:25%;">Owner</th>
+            </tr>
+            <tr>
+                <td class="center">1</td>
+                <td>Initial video call to discuss mutual interest and partnership framework</td>
+                <td>Within 2 weeks</td>
+                <td>Both parties</td>
+            </tr>
+            <tr>
+                <td class="center">2</td>
+                <td>Martinez / Hultafors shares wholesale pricing and dealer terms</td>
+                <td>Following call</td>
+                <td>Martinez / Hultafors</td>
+            </tr>
+            <tr>
+                <td class="center">3</td>
+                <td>Ru Guo submits detailed business plan with confirmed pricing</td>
+                <td>Within 1 week of pricing</td>
+                <td>Ru Guo</td>
+            </tr>
+            <tr>
+                <td class="center">4</td>
+                <td>Sign distribution agreement (exclusive or semi-exclusive for Taiwan)</td>
+                <td>Month 1-2</td>
+                <td>Both parties</td>
+            </tr>
+            <tr>
+                <td class="center">5</td>
+                <td>Place initial order and begin market preparation</td>
+                <td>Month 2-3</td>
+                <td>Ru Guo</td>
+            </tr>
+        </table>
+
+        <div class="highlight-teal">
+            <strong>We are open to:</strong><br>
+            • Starting with a smaller test order to validate the market before committing to larger volumes<br>
+            • A probationary period (6-12 months) to demonstrate sales performance before exclusive rights<br>
+            • Meeting in person at STAFDA 2026 (November, Anaheim) or WOC 2027 (January, Las Vegas)<br>
+            • A video call at your convenience to discuss this opportunity further
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    Martinez Tools — Taiwan Market Distribution Proposal<br>
+    Prepared by Ru Guo Interior Design Co., Ltd. (如菓室內裝修有限公司) ・ May 2026<br>
+    Confidential — For Martinez Tool Co. / Hultafors Group Internal Use Only
+</footer>
+
+</body>
+</html>
